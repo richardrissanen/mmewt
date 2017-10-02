@@ -1,27 +1,51 @@
-# Mmewt
+# MMEWT: Mutable Mobile Events Web Template
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
+## Proposal
+* Audience
+  * Small Festivals, Conferences, Unconferences, and events with limited budgets
+* Problem
+  * Current solutions are expensive, over-engineered, resource intensive, lack incentive for the user, and sometimes all of the above
+* Solution
+  * Deliver a stripped down solution that only offers the most relevant features (index of events, favorites, events currently happening)
+* Tech
+  * Leverage Angular 4 and static JSON to create a fast SPA as a MVP
 
-## Development server
+## Event Model
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Required**
 
-## Code scaffolding
+* id: number
+* title: string
+* description: string
+* start_date: string ("Thu Jan 03 1985 11:11:11 GMT-0400")
+* end_date: string ("Thu Jan 03 1985 11:11:11 GMT-0400")
+* location: string (name)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+**Optional**
 
-## Build
+* host: string (author / band / moderator / name / speaker / sponsor)
+* feature: string (author / band / moderator / name / speaker / sponsor)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Breakdown
 
-## Running unit tests
+### Modules
+* App
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Components
+* Navigation
+* Events
+  * All 
+  * Transforms  
+     * Fav
+     * Now
+* Event
+  * Header
+  * Detail
+  * Description
 
-## Running end-to-end tests
+### Services
+* Data
+* Local Storage
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Pipe
+* Truncate
