@@ -33,15 +33,13 @@
 
 ### Components
 * Navigation
-* Events
-  * All 
-  * Transforms  
-     * Fav
-     * Now
 * Event
   * Header
   * Detail
   * Description
+  * _Transforms_
+    * Fav
+    * Now
 
 ### Services
 * Data
