@@ -1,0 +1,21 @@
+<ul>
+  <li *ngFor="let event of events">
+    <article>
+      <section>{{ event.title }} {{ event.location }} {{ event.time}}</section>
+      
+      <section> 
+        <dl>
+          <dt>Host</dt>
+          <dd>{{ event.host }}</dd>
+          <dt>Feature</dt>
+          <dd>{{ event.feature }}</dd>
+          <dt>Duration</dt>
+          <dd>{{ (event.endTime - event.startTime) / 1000 / 60 }} minutes</dd>
+        </dl>
+      </section>
+
+      <section>{{ event.description }}</section>
+
+    </article>
+  </li>
+</ul>
