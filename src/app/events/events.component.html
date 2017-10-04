@@ -1,7 +1,10 @@
 <ul>
   <li *ngFor="let event of events">
     <article>
-      <section>{{ event.title }} {{ event.location }} {{ event.time}}</section>
+      <section>
+        {{ event.title }} {{ event.location }} {{ event.time}} 
+        <a (click)="favoriteEvent(event.id)" class="star"></a>
+      </section>
       
       <section> 
         <dl>

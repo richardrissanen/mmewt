@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../data.service';
 import { MessageService } from '../message.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-events',
@@ -11,8 +12,9 @@ import { MessageService } from '../message.service';
 export class EventsComponent implements OnInit {
   allEvents: Array<object>
   events: Array<object>
+  favoriteEvents: Array<object>
 
-  constructor(private _dataService: DataService, private _messageService: MessageService) {
+  constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
     this._messageService.listen().subscribe((message: String) => {
       this.changeEventContext(message);
     });
@@ -34,7 +36,7 @@ export class EventsComponent implements OnInit {
         break;
       }
       case 'showFavorites': {
-        console.log('Only Favorites!!!')
+        this.events = this.enumerateAllEventsForFavorites();
         break;
       }
     }
@@ -53,6 +55,19 @@ export class EventsComponent implements OnInit {
     return currentEvents;
   }
 
-  enumerateAllEventsForFavorites() { return []; }
+  enumerateAllEventsForFavorites() { 
+    var favoriteEvents = new Array();
+    const favoriteEventIds = this._localStorageService.fetchFavorites();
+    
+    this.allEvents.forEach(function(event) {
+      if (favoriteEventIds.indexOf(event['id']) !== -1) { favoriteEvents.push(event); }
+    });
+
+    return favoriteEvents; 
+  }
+
+  favoriteEvent(eventId) { 
+    this._localStorageService.toggleFavorite(eventId); 
+  }
   
 }
