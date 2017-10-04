@@ -28,6 +28,8 @@ export class LocalStorageService  {
     } else {
       alert('Sorry, your web browser does not support local storage.');
     }
+
+    return true
   }
 
   fetchFavorites() { 

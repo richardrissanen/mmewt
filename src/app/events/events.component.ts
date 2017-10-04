@@ -12,7 +12,7 @@ import { LocalStorageService } from '../local-storage.service';
 export class EventsComponent implements OnInit {
   allEvents: Array<object>
   events: Array<object>
-  favoriteEvents: Array<object>
+  favIds: Array<object>
 
   constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
     this._messageService.listen().subscribe((message: String) => {
@@ -23,6 +23,7 @@ export class EventsComponent implements OnInit {
   ngOnInit() {
     this.allEvents = this._dataService.fetchEvents();
     this.events = this.allEvents;
+    this.favIds = this._localStorageService.fetchFavorites();
   }
 
   changeEventContext(message: String) {
@@ -67,7 +68,10 @@ export class EventsComponent implements OnInit {
   }
 
   favoriteEvent(eventId) { 
-    this._localStorageService.toggleFavorite(eventId); 
+    const finished = this._localStorageService.toggleFavorite(eventId); 
+    if (finished)  { this.favIds = this._localStorageService.fetchFavorites(); }
   }
+
+  isFavorite(eventId) { return this.favIds.indexOf(eventId) !== -1 }
   
 }

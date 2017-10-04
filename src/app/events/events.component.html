@@ -3,7 +3,7 @@
     <article>
       <section>
         {{ event.title }} {{ event.location }} {{ event.time}} 
-        <a (click)="favoriteEvent(event.id)" class="star"></a>
+        <a (click)="favoriteEvent(event.id)" [ngClass]="{star: true, favorite: isFavorite(event.id)}"></a>
       </section>
       
       <section> 
