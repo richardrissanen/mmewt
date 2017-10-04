@@ -1,16 +1,23 @@
 import { TestBed, async } from '@angular/core/testing';
+
 import { AppComponent } from './app.component';
 import { EventsComponent } from './events/events.component';
+import { NavComponent } from './nav/nav.component';
 import { DataService } from './data.service';
+import { MessageService } from './message.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        EventsComponent
+        EventsComponent,
+        NavComponent
       ],
-      providers: [DataService]      
+      providers: [ 
+        DataService,
+        MessageService
+       ]      
     }).compileComponents();
   }));
   it('should create the app', async(() => {

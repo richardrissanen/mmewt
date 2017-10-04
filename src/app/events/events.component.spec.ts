@@ -3,6 +3,7 @@ import { By } from '@angular/platform-browser';
 
 import { EventsComponent } from './events.component';
 import { DataService } from '../data.service';
+import { MessageService } from '../message.service';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -11,7 +12,10 @@ describe('EventsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EventsComponent ],
-      providers: [DataService]
+      providers: [ 
+        DataService,
+        MessageService
+      ]
     })
     .compileComponents();
   }));
@@ -52,5 +56,36 @@ describe('EventsComponent', () => {
     expect(dd.length).toBe(12);
   }));
 
+  it('should have events that match dataServiceEvents', inject([DataService], (service: DataService) => {
+    const componentEvents = component.events;
+    const dataServiceEvents = new DataService().fetchEvents()
+    expect(componentEvents).toEqual(dataServiceEvents);
+  }));
+
+  it('should return an array with 1 event when enumerateAllEventsForCurrent runs', inject([DataService], (service: DataService) => {
+    spyOn(service, 'fetchEvents').and.returnValue(
+      [
+        {
+          id: 4,
+          title: 'Event Title #4',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          startTime: new Date(),
+          endTime: new Date(),
+          location: 'Location #2',
+          host: 'Hostname',
+          feature: 'Feature Name'
+        }
+      ]
+    )
+    const currentEvents = component.enumerateAllEventsForCurrent();
+    expect(Object.prototype.toString.call(currentEvents)).toEqual('[object Array]');
+    expect(currentEvents.length).toEqual(1);
+  }));
+
+  it('should return an empty array when enumerateAllEventsForFavorites runs', inject([DataService], (service: DataService) => {
+    const favoriteEvents = component.enumerateAllEventsForFavorites();
+    expect(Object.prototype.toString.call(favoriteEvents)).toEqual('[object Array]');
+    expect(favoriteEvents.length).toEqual(0);
+  }));
 
 });
