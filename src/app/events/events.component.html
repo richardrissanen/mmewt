@@ -1,4 +1,5 @@
 <ul>
+  <h2 *ngIf="noEventsMessage">{{ noEventsMessage }}</h2>
   <li *ngFor="let event of events">
     <article>
       <section>

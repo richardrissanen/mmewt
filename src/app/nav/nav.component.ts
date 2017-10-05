@@ -8,15 +8,23 @@ import { MessageService } from '../message.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+
+  lastButtonClicked: string
+
   @Output() 
   onFilter: EventEmitter<any> = new EventEmitter();
 
   constructor(private _messageService: MessageService) { }
 
-  ngOnInit() {}
+  ngOnInit() { this.lastButtonClicked = 'showAll'; }
 
-  showAll() { this._messageService.brodcast('showAll') }
-  showCurrent() { this._messageService.brodcast('showCurrent') }
-  showFavorites() { this._messageService.brodcast('showFavorites') }
+  showAll() { this.handleClick('showAll'); }
+  showCurrent() { this.handleClick('showCurrent'); }  
+  showFavorites() { this.handleClick('showFavorites'); }
+
+  private handleClick(flag: string) {
+    this._messageService.brodcast(flag);
+    this.lastButtonClicked = flag; 
+  }
 
 }

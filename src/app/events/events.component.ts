@@ -13,6 +13,7 @@ export class EventsComponent implements OnInit {
   allEvents: Array<object>
   events: Array<object>
   favIds: Array<object>
+  noEventsMessage: string
 
   constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
     this._messageService.listen().subscribe((message: String) => {
@@ -30,14 +31,17 @@ export class EventsComponent implements OnInit {
     switch(message) {
       case 'showAll': {
         this.events = this.allEvents;
+        this.noEventsMessage = null;
         break;
       }
       case 'showCurrent': {
         this.events = this.enumerateAllEventsForCurrent();
+        this.updateNoEventsMessage('There appears to be no events happening soon.'); 
         break;
       }
       case 'showFavorites': {
         this.events = this.enumerateAllEventsForFavorites();
+        this.updateNoEventsMessage('In order for events to show up here, you must tap the star.');
         break;
       }
     }
@@ -73,5 +77,10 @@ export class EventsComponent implements OnInit {
   }
 
   isFavorite(eventId) { return this.favIds.indexOf(eventId) !== -1 }
+  
+  updateNoEventsMessage(message) { 
+    if (this.events.length === 0) { this.noEventsMessage = message; }
+    else { this.noEventsMessage = null } 
+  }
   
 }
