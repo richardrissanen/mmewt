@@ -15,7 +15,7 @@ export class DataService {
   }  
 
   sortBy(key, arrayOfObjects) {
-    return arrayOfObjects.sort(function(a, b){return a['startTime'] > b['startTime'] })
+    return arrayOfObjects.sort(function(a, b){ return a[key] > b[key] })
   }
 
 }
