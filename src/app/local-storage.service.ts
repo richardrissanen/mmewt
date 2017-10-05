@@ -33,8 +33,14 @@ export class LocalStorageService  {
   }
 
   fetchFavorites() { 
-    const favorites = localStorage.getItem('favorites'); 
-    const favoritesArray = JSON.parse(favorites);
+    const favorites = localStorage.getItem('favorites');
+    var favoritesArray: Array<object>
+
+    if (favorites !== null && typeof favorites !== 'undefined') { 
+      favoritesArray = JSON.parse(favorites);
+    } else {
+      favoritesArray = [];
+    }
     
     return favoritesArray;
   }
