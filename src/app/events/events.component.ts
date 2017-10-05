@@ -14,6 +14,7 @@ export class EventsComponent implements OnInit {
   events: Array<object>
   favIds: Array<object>
   noEventsMessage: string
+  dateFormat: string
 
   constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
     this._messageService.listen().subscribe((message: String) => {
@@ -25,6 +26,7 @@ export class EventsComponent implements OnInit {
     this.allEvents = this._dataService.fetchEvents();
     this.events = this.allEvents;
     this.favIds = this._localStorageService.fetchFavorites();
+    this.dateFormat = 'EEE hh:mma';
   }
 
   changeEventContext(message: String) {

@@ -10,6 +10,26 @@ a.star {
 }
 a.star.favorite { background-image: url('../../assets/fav_full.png'); }
 
+ul { margin-bottom: 55px; }
+
 ul, li {padding: 11px 0; }
-ul { border-top: 1px solid #000; }
-li { border-bottom: 1px solid #000; }
+li { 
+    border-bottom: 1px solid #000; 
+    padding: 11px 2%;
+}
+li:first-child { 
+    border-top: 1px solid #000;
+}
+
+dl > dd, dl > dt {
+    display: inline;
+    display: inline-block;
+}
+
+dl > dt {
+    font-weight: bold;
+}
+
+section { padding: 11px 0;}
+
+.alert { text-align: center; }
