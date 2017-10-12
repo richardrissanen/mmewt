@@ -9,22 +9,26 @@ import { MessageService } from '../message.service';
 })
 export class NavComponent implements OnInit {
 
-  lastButtonClicked: string
+  isFavoritesToggledOn: boolean
 
   @Output() 
   onFilter: EventEmitter<any> = new EventEmitter();
 
   constructor(private _messageService: MessageService) { }
 
-  ngOnInit() { this.lastButtonClicked = 'showAll'; }
+  ngOnInit() { 
+    this.isFavoritesToggledOn = false;
+    this.toggleFavorites(this.isFavoritesToggledOn); 
+  }
+ 
+  showFavorites() { 
+    this.isFavoritesToggledOn = !this.isFavoritesToggledOn;    
+    this.toggleFavorites(this.isFavoritesToggledOn); 
+  }
 
-  showAll() { this.handleClick('showAll'); }
-  showCurrent() { this.handleClick('showCurrent'); }  
-  showFavorites() { this.handleClick('showFavorites'); }
-
-  private handleClick(flag: string) {
+  
+  private toggleFavorites(flag: boolean) {
     this._messageService.brodcast(flag);
-    this.lastButtonClicked = flag; 
   }
 
 }

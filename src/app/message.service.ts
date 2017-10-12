@@ -13,7 +13,7 @@ export class MessageService {
       return this._listners.asObservable();
   }
 
-  brodcast(message: string) {
+  brodcast(message: boolean) {
       this._listners.next(message);
   }
 

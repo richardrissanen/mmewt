@@ -17,8 +17,8 @@ export class EventsComponent implements OnInit {
   dateFormat: string
 
   constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
-    this._messageService.listen().subscribe((message: String) => {
-      this.changeEventContext(message);
+    this._messageService.listen().subscribe((message: boolean) => {
+      this.toggleFavorites(message);
     });
   }
 
@@ -27,26 +27,15 @@ export class EventsComponent implements OnInit {
     this.events = this.allEvents;
     this.favIds = this._localStorageService.fetchFavorites();
     this.dateFormat = 'EEE hh:mma';
+    this.updateNoEventsMessage('In order for events to show up here, you must tap the star.');    
   }
 
-  changeEventContext(message: String) {
-    switch(message) {
-      case 'showAll': {
-        this.events = this.allEvents;
-        this.noEventsMessage = null;
-        break;
-      }
-      case 'showCurrent': {
-        this.events = this.enumerateAllEventsForCurrent();
-        this.updateNoEventsMessage('There appears to be no events happening soon.'); 
-        break;
-      }
-      case 'showFavorites': {
+  toggleFavorites(show: boolean) {
+    if (show) {
         this.events = this.enumerateAllEventsForFavorites();
-        this.updateNoEventsMessage('In order for events to show up here, you must tap the star.');
-        break;
-      }
-    }
+    } else {
+      this.events = this.allEvents;
+    } 
   }
 
   enumerateAllEventsForCurrent() {

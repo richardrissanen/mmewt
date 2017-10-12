@@ -1,15 +1,3 @@
-a.star {
-    background-image: url('../../assets/fav_empty.png');
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: 26px 25px;
-    display: inline;    
-    display: inline-block;
-    float: right;
-    padding: 0 14px 24px 14px;
-}
-a.star.favorite { background-image: url('../../assets/fav_full.png'); }
-
 ul { margin-bottom: 55px; }
 
 ul, li {padding: 11px 0; }

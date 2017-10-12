@@ -1,20 +1,19 @@
+a, input { font-family: helvetica, arial, courier, sans-serif; }
+
+a.star, a.star.favorite { 
+    position: relative;
+    top: 7px;
+}
+
+form, input { width: 100%; }
+
 nav {
     background-color: #fff;
     border-top: 1px solid #000;
-    height: 11px;
-    padding: 33px 0;
+    height: 33px;
+    padding: 11px 0;
     position: fixed;
     bottom: 0px;
-    width: 100%;
-}
-
-nav a {
-	font-family: helvetica, arial, courier, sans-serif; 
-}
-
-ul {
-    margin: 0;
-    padding: 0;
     width: 100%;
 }
 
@@ -24,5 +23,13 @@ li {
     margin: 0;    
     padding: 0;
     text-align: center;         
-    width: 30%;
+    width: 10%;
+}
+
+li:first-child { width: 85%; }
+
+ul {
+    margin: 0;
+    padding: 0 2%;
+    width: 100%;
 }

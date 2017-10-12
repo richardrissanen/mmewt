@@ -25,25 +25,9 @@ describe('NavComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should broadcast "showAll" when showAll() runs', inject([MessageService], (_messageService: MessageService) => {
-    _messageService.listen().subscribe((message: String) => {
-      expect(message).toEqual('showAll');
-    });
-    
-    component.showAll();
-  }));
-
-  it('should broadcast "showCurrent" when showCurrent() runs', inject([MessageService], (_messageService: MessageService) => {
-    _messageService.listen().subscribe((message: String) => {
-      expect(message).toEqual('showCurrent');
-    });
-    
-    component.showCurrent();
-  }));
-
   it('should broadcast "showFavorites" when showFavorites() runs', inject([MessageService], (_messageService: MessageService) => {
-    _messageService.listen().subscribe((message: String) => {
-      expect(message).toEqual('showFavorites');
+    _messageService.listen().subscribe((message: boolean) => {
+      expect(message).toEqual(true);
     });
     
     component.showFavorites();

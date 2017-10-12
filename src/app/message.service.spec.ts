@@ -14,10 +14,10 @@ describe('MessageService', () => {
   }));
 
   it('should broadcast "showAll" and receive "showAll" when listening', inject([MessageService], (_messageService: MessageService) => {
-    _messageService.listen().subscribe((message: String) => {
-      expect(message).toEqual('showAll');
+    _messageService.listen().subscribe((message: boolean) => {
+      expect(message).toEqual(false);
     });
     
-    _messageService.brodcast('showAll')
+    _messageService.brodcast(false)
   }));
 });
