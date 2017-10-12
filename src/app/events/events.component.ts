@@ -59,8 +59,12 @@ export class EventsComponent implements OnInit {
     
     this.allEvents.forEach(function(event) {
       const lowerCasedTitle = event['title'].toLowerCase();
-      const lowerCasedTerm = term.toLowerCase();      
-      if (lowerCasedTitle.indexOf(lowerCasedTerm) !== -1) { eventsFound.push(event); }
+      const lowerCasedLocation = event['location'].toLowerCase();      
+      const lowerCasedTerm = term.toLowerCase();
+      const titleMatched = lowerCasedTitle.indexOf(lowerCasedTerm) !== -1
+      const locationMatched = lowerCasedLocation.indexOf(lowerCasedTerm) !== -1
+      
+      if (titleMatched || locationMatched) { eventsFound.push(event); }
     });
 
     return eventsFound;
