@@ -1,9 +1,11 @@
 a, input { font-family: helvetica, arial, courier, sans-serif; }
 
-a.star, a.star.favorite { 
-    position: relative;
-    top: 7px;
+a.star { 
+    background-image: url('../../assets/dark_full.png');
+    top: 7px; 
 }
+
+a.star.favorite { background-image: url('../../assets/fav_full.png'); }
 
 form, input { width: 100%; }
 

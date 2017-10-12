@@ -27,7 +27,7 @@ export class EventsComponent implements OnInit {
     this.events = this.allEvents;
     this.favIds = this._localStorageService.fetchFavorites();
     this.dateFormat = 'EEE hh:mma';
-    this.updateNoEventsMessage('In order for events to show up here, you must tap the star.');    
+    this.noEventsMessage = ('In order for events to show up here, you must tap the star.');    
   }
 
   process(message: object) {
@@ -87,10 +87,5 @@ export class EventsComponent implements OnInit {
   }
 
   isFavorite(eventId) { return this.favIds.indexOf(eventId) !== -1 }
-  
-  updateNoEventsMessage(message) { 
-    if (this.events.length === 0) { this.noEventsMessage = message; }
-    else { this.noEventsMessage = null } 
-  }
   
 }

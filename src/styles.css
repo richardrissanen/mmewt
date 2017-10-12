@@ -64,6 +64,8 @@ a.star {
     display: inline;    
     display: inline-block;
     float: right;
-    padding: 0 14px 24px 14px;
+	padding: 0 14px 24px 14px;
+	position: relative;
+	top: -27px;
 }
 a.star.favorite { background-image: url('./assets/fav_full.png'); }
