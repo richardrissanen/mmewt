@@ -5,6 +5,7 @@ import { EventsComponent } from './events/events.component';
 import { NavComponent } from './nav/nav.component';
 import { DataService } from './data.service';
 import { MessageService } from './message.service';
+import { LocalStorageService } from './local-storage.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -16,7 +17,8 @@ describe('AppComponent', () => {
       ],
       providers: [ 
         DataService,
-        MessageService
+        MessageService,
+        LocalStorageService
        ]      
     }).compileComponents();
   }));
