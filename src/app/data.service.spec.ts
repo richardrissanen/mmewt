@@ -30,6 +30,7 @@ describe('DataService', () => {
       const response = service.fetchEvents();
       
       response.forEach(function(item) {
+        // host and feature are not checked because they are optional
         ['id', 'title', 'description', 'startTime', 'endTime', 'location'].forEach(function(key) {
           const objectKeys = Object.keys(item)
           expect(objectKeys.indexOf(key)).not.toBe(-1);

@@ -1,0 +1,28 @@
+nav {
+    background-color: #fff;
+    border-top: 1px solid #000;
+    height: 11px;
+    padding: 33px 0;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+nav a {
+	font-family: helvetica, arial, courier, sans-serif; 
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+li { 
+    display: inline;    
+    display: inline-block;
+    margin: 0;    
+    padding: 0;
+    text-align: center;         
+    width: 30%;
+}

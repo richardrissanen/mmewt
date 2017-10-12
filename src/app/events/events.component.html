@@ -1,0 +1,29 @@
+<p *ngIf="noEventsMessage" class="alert"><i>{{ noEventsMessage }}</i></p>
+<ul>
+  <li *ngFor="let event of events">
+    <article>
+      <section>
+        <h4>
+          {{ event.title }} {{ event.location }} {{ event.startTime | date:dateFormat }}
+          <a (click)="favoriteEvent(event.id)" [ngClass]="{star: true, favorite: isFavorite(event.id)}"></a>
+        </h4>
+      </section>
+      
+      <section> 
+        <dl>
+          <dt>Host:</dt>
+          <dd>{{ event.host }}</dd>
+          <br>          
+          <dt>Feature:</dt>
+          <dd>{{ event.feature }}</dd>
+          <br>
+          <dt>Duration:</dt>
+          <dd>{{ (event.endTime - event.startTime) / 1000 / 60 }} minutes</dd>
+        </dl>
+      </section>
+
+      <section>{{ event.description }}</section>
+
+    </article>
+  </li>
+</ul>

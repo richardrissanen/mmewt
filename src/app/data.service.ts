@@ -6,10 +6,16 @@ import { data } from './data';
 export class DataService {
   events: Array<object>
 
-  fetchEvents() { return this.events }  
-
   constructor() {
     this.events = data;
+  }
+
+  fetchEvents() { 
+    return this.sortBy('startTime', this.events)
+  }  
+
+  sortBy(key, arrayOfObjects) {
+    return arrayOfObjects.sort(function(a, b){ return a[key] > b[key] })
   }
 
 }
