@@ -1,7 +1,7 @@
 <nav>
   <ul>
     <li>
-      <form><input type="text" placeholder="Search"></form>
+      <form><input type="text" placeholder="Search" #search (keyup)="onKey(search.value)"></form>
     </li>
     <li><a (click)="showFavorites()" [ngClass]="{star: true, favorite: isFavoritesToggledOn}"></a></li>
   </ul>

@@ -18,17 +18,21 @@ export class NavComponent implements OnInit {
 
   ngOnInit() { 
     this.isFavoritesToggledOn = false;
-    this.toggleFavorites(this.isFavoritesToggledOn); 
-  }
- 
-  showFavorites() { 
-    this.isFavoritesToggledOn = !this.isFavoritesToggledOn;    
-    this.toggleFavorites(this.isFavoritesToggledOn); 
+    this.brodcast('toggleFavorites', this.isFavoritesToggledOn); 
   }
 
-  
-  private toggleFavorites(flag: boolean) {
-    this._messageService.brodcast(flag);
+  onKey(term: string) { this.brodcast('search', term); }
+
+  showFavorites() { 
+    this.isFavoritesToggledOn = !this.isFavoritesToggledOn;    
+    this.brodcast('toggleFavorites', this.isFavoritesToggledOn); 
+  }
+
+  private brodcast(type: string, value: any) {
+    this._messageService.brodcast({ 
+      type: type,      
+      value: value
+    });
   }
 
 }

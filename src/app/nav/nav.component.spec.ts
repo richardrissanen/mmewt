@@ -26,8 +26,8 @@ describe('NavComponent', () => {
   });
 
   it('should broadcast "showFavorites" when showFavorites() runs', inject([MessageService], (_messageService: MessageService) => {
-    _messageService.listen().subscribe((message: boolean) => {
-      expect(message).toEqual(true);
+    _messageService.listen().subscribe((message: object) => {
+      expect(message['value']).toEqual(true);
     });
     
     component.showFavorites();

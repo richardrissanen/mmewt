@@ -17,8 +17,8 @@ export class EventsComponent implements OnInit {
   dateFormat: string
 
   constructor(private _dataService: DataService, private _messageService: MessageService, private _localStorageService: LocalStorageService) {
-    this._messageService.listen().subscribe((message: boolean) => {
-      this.toggleFavorites(message);
+    this._messageService.listen().subscribe((message: object) => {
+      this.process(message);
     });
   }
 
@@ -30,6 +30,22 @@ export class EventsComponent implements OnInit {
     this.updateNoEventsMessage('In order for events to show up here, you must tap the star.');    
   }
 
+  process(message: object) {
+    const value = message['value'];
+
+    switch (message['type']) {
+      case 'toggleFavorites': { 
+        this.toggleFavorites(value); 
+        break;
+      }
+      case 'search': { 
+        this.events = this.searchEventsFor(value); 
+        break;        
+      }
+    }
+    
+  }
+
   toggleFavorites(show: boolean) {
     if (show) {
         this.events = this.enumerateAllEventsForFavorites();
@@ -38,17 +54,16 @@ export class EventsComponent implements OnInit {
     } 
   }
 
-  enumerateAllEventsForCurrent() {
-    var currentEvents = new Array();
+  searchEventsFor(term: String) {    
+    var eventsFound = new Array();
     
     this.allEvents.forEach(function(event) {
-      const now = new Date();
-      
-      // should subtract some arbitray amount of time (15 minutes?) from startTime so that events will show before they start
-      if (event['endTime'] > now && event['startTime'] <= now) { currentEvents.push(event); }
+      const lowerCasedTitle = event['title'].toLowerCase();
+      const lowerCasedTerm = term.toLowerCase();      
+      if (lowerCasedTitle.indexOf(lowerCasedTerm) !== -1) { eventsFound.push(event); }
     });
 
-    return currentEvents;
+    return eventsFound;
   }
 
   enumerateAllEventsForFavorites() { 
