@@ -37,25 +37,12 @@ describe('EventsComponent', () => {
     expect(listItems.length).toBe(4);
   }));
 
-  it('should have list items with an article that have 3 sections each', inject([DataService], (service: DataService) => {
+  it('should have list items with an article that have one section each', inject([DataService], (service: DataService) => {
     const articles = fixture.debugElement.queryAll(By.css('li > article'));
     expect(articles.length).toBe(4);
     
     const sections = fixture.debugElement.queryAll(By.css('li > article > section'));
-    expect(sections.length).toBe(12);
-  }));
-
-  it('should have list items with an article that has 1 section that has a dl', inject([DataService], (service: DataService) => {
-    const dl = fixture.debugElement.queryAll(By.css('li > article > section > dl'));
-    expect(dl.length).toBe(4);
-  }));
-
-  it('should have list items with an article that has 1 section that has a dl with 3 dt and dd', inject([DataService], (service: DataService) => {
-    const dt = fixture.debugElement.queryAll(By.css('li > article > section > dl > dt'));
-    expect(dt.length).toBe(12);
-
-    const dd = fixture.debugElement.queryAll(By.css('li > article > section > dl > dd'));
-    expect(dd.length).toBe(12);
+    expect(sections.length).toBe(4);
   }));
 
   it('should have events that match dataServiceEvents', inject([DataService], (service: DataService) => {

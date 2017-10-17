@@ -2,27 +2,16 @@
 <ul>
   <li *ngFor="let event of events">
     <article>
+      
       <section>
-        <h4>{{ event.title }} </h4>
-        <p>{{ event.location }} {{ event.startTime | date:dateFormat }}</p>
+        <a routerLink="events/{{ event.id }}">
+          <h4>{{ event.title }} </h4>
+          <p>{{ event.location }} {{ event.startTime | date:dateFormat }}</p>
+        </a>
         <a (click)="favoriteEvent(event.id)" [ngClass]="{star: true, favorite: isFavorite(event.id)}"></a>
       </section>
-      
-      <!-- <section> 
-        <dl>
-          <dt>Host:</dt>
-          <dd>{{ event.host }}</dd>
-          <br>          
-          <dt>Feature:</dt>
-          <dd>{{ event.feature }}</dd>
-          <br>
-          <dt>Duration:</dt>
-          <dd>{{ (event.endTime - event.startTime) / 1000 / 60 }} minutes</dd>
-        </dl>
-      </section>
-
-      <section>{{ event.description }}</section> -->
 
     </article>
   </li>
 </ul>
+<app-nav></app-nav>

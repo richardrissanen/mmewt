@@ -1,0 +1,12 @@
+article > section {
+    padding: 11px 2%;    
+}
+
+dl > dt, dl > dd {
+    display: inline;
+    display: inline-block;
+}
+
+dl > dt {
+    font-weight: bold;
+}
