@@ -1,29 +1,21 @@
+a { text-decoration: none; }
+
 ul { margin-bottom: 55px; }
 
 ul, li {padding: 11px 0; }
-li { 
-    border-bottom: 1px solid #999; 
+li {
+    border-bottom: 1px solid #999;
     padding: 11px 2%;
 }
-li:first-child { 
+li:first-child {
     border-top: 1px solid #999;
 }
 li p {
     color: #777;
 }
-/* li.disabled, li.disabled h4 {
+li.disabled h4, li.disabled p {
     color: #bbb;
-} */
-
-/* NO LONGER USED IN EVENTS */
-/* dl > dd, dl > dt {
-    display: inline;
-    display: inline-block;
 }
-
-dl > dt {
-    font-weight: bold;
-} */
 
 section { padding: 11px 0;}
 

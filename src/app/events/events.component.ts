@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { MessageService } from '../message.service';
 import { LocalStorageService } from '../local-storage.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-events',
@@ -27,23 +28,23 @@ export class EventsComponent implements OnInit {
     this.events = this.allEvents;
     this.favIds = this._localStorageService.fetchFavorites();
     this.dateFormat = 'EEE hh:mma';
-    this.noEventsMessage = ('In order for events to show up here, you must tap the star.');    
+    this.noEventsMessage = ('In order for events to show up here, you must tap the star.');
   }
 
   process(message: object) {
     const value = message['value'];
 
     switch (message['type']) {
-      case 'toggleFavorites': { 
-        this.toggleFavorites(value); 
+      case 'toggleFavorites': {
+        this.toggleFavorites(value);
         break;
       }
-      case 'search': { 
-        this.events = this.searchEventsFor(value); 
-        break;        
+      case 'search': {
+        this.events = this.searchEventsFor(value);
+        break;
       }
     }
-    
+
   }
 
   toggleFavorites(show: boolean) {
@@ -51,41 +52,46 @@ export class EventsComponent implements OnInit {
         this.events = this.enumerateAllEventsForFavorites();
     } else {
       this.events = this.allEvents;
-    } 
+    }
   }
 
-  searchEventsFor(term: String) {    
+  searchEventsFor(term: String) {
     var eventsFound = new Array();
-    
+
     this.allEvents.forEach(function(event) {
       const lowerCasedTitle = event['title'].toLowerCase();
-      const lowerCasedLocation = event['location'].toLowerCase();      
+      const lowerCasedLocation = event['location'].toLowerCase();
       const lowerCasedTerm = term.toLowerCase();
       const titleMatched = lowerCasedTitle.indexOf(lowerCasedTerm) !== -1
       const locationMatched = lowerCasedLocation.indexOf(lowerCasedTerm) !== -1
-      
+
       if (titleMatched || locationMatched) { eventsFound.push(event); }
     });
 
     return eventsFound;
   }
 
-  enumerateAllEventsForFavorites() { 
+  enumerateAllEventsForFavorites() {
     var favoriteEvents = new Array();
     const favoriteEventIds = this._localStorageService.fetchFavorites();
-    
+
     this.allEvents.forEach(function(event) {
       if (favoriteEventIds.indexOf(event['id']) !== -1) { favoriteEvents.push(event); }
     });
 
-    return favoriteEvents; 
+    return favoriteEvents;
   }
 
-  favoriteEvent(eventId) { 
-    const finished = this._localStorageService.toggleFavorite(eventId); 
+  favoriteEvent(eventId) {
+    const finished = this._localStorageService.toggleFavorite(eventId);
     if (finished)  { this.favIds = this._localStorageService.fetchFavorites(); }
   }
 
   isFavorite(eventId) { return this.favIds.indexOf(eventId) !== -1 }
-  
+  isInThePast(eventEndDate) { return eventEndDate < new Date() }
+
+  autoScroll() {
+
+  }
+
 }

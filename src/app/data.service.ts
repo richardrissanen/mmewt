@@ -10,9 +10,9 @@ export class DataService {
     this.events = data;
   }
 
-  fetchEvents() { 
+  fetchEvents() {
     return this.sortBy('startTime', this.events)
-  }  
+  }
 
   sortBy(key, arrayOfObjects) {
     return arrayOfObjects.sort(function(a, b){ return a[key] > b[key] })

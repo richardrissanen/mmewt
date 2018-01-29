@@ -1,8 +1,8 @@
 <p *ngIf="events.length == 0" class="alert"><i>{{ noEventsMessage }}</i></p>
 <ul>
-  <li *ngFor="let event of events">
+  <li *ngFor="let event of events" [ngClass]="{disabled: isInThePast(event.endTime)}">
     <article>
-      
+
       <section>
         <a routerLink="events/{{ event.id }}">
           <h4>{{ event.title }} </h4>
@@ -13,5 +13,6 @@
 
     </article>
   </li>
+  <li id="current">test</li>
 </ul>
 <app-nav></app-nav>
