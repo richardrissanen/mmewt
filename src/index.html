@@ -29,19 +29,19 @@
     <form class="form-inline my-2 my-lg-0">
       <input id="search" class="form-control mr-sm-1" type="text" placeholder="Search" aria-label="Search" onkeyup="filterEvents()">
     </form>
-    <a href="" id="favorite" class="favorite-toggle">&#9733;</a>
+    <a href="" id="favorite" class="star"></a>
   </nav>
 
   <main role="main" class="container">
 
     <ul class="list-group">
       <li class="list-group-item">
-        <a href="#">
+        <a href="#" onclick="alert('clicked');">
           <h6>Throwback Thursdays</h6>
           <p><small class="text-muted">4:00pm</small></p>
         </a>
 
-        <a href="" class="favorite-toggle">&#9733;</a>
+        <a href="#" class="favorite-toggle star" data-id="1"></a>
       </li>
 
       <li class="list-group-item">
@@ -50,7 +50,7 @@
             <p><small class="text-muted">4:00pm</small></p>
           </a>
 
-          <a href="" class="favorite-toggle">&#9733;</a>
+          <a href="" class="favorite-toggle star" data-id="2"></a>
       </li>
 
       <li class="list-group-item">
@@ -59,7 +59,7 @@
             <p><small class="text-muted">4:00pm</small></p>
           </a>
 
-          <a href="" class="favorite-toggle">&#9733;</a>
+          <a href="" class="favorite-toggle star" data-id="3"></a>
       </li>
 
     </ul>
