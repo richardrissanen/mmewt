@@ -48,6 +48,8 @@ Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
   toggle.addEventListener("click", function(event){
     event.preventDefault();
 
+    var favoritesArrayString;
+
     this.classList.toggle('empty');
 
     var eventId = this.getAttribute('data-id');
@@ -72,7 +74,7 @@ Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
         favoritesArray.push(eventId);
       }
 
-      var favoritesArrayString = JSON.stringify(favoritesArray);
+      favoritesArrayString = JSON.stringify(favoritesArray);
       localStorage.setItem('favorites', favoritesArrayString);
     }
     else {
@@ -106,4 +108,37 @@ fetchFavorites = function()
       favoritesArray = [];
   }
   return favoritesArray;
+}
+
+
+// Toggle Favorites
+var favorite = document.getElementById('favorite');
+
+favorite.addEventListener("click", function(event){
+  if (typeof (Storage) !== "undefined") {
+    var favorites = localStorage.getItem('favorites');
+
+      if (favorites !== null && typeof favorites !== 'undefined') {
+        var favoritesArray = JSON.parse(favorites);
+        Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
+          if (favoritesArray.indexOf(toggle.getAttribute("data-id")) == -1) { 
+            toggle.parentNode.classList.toggle('hide');
+          }
+        });
+      }
+  }
+});
+
+// populate favorite stars
+if (typeof (Storage) !== "undefined") {
+  var favorites = localStorage.getItem('favorites');
+
+    if (favorites !== null && typeof favorites !== 'undefined') {
+      var favoritesArray = JSON.parse(favorites);
+      Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
+        if (favoritesArray.indexOf(toggle.getAttribute("data-id")) != -1) { 
+          toggle.classList.remove('empty')
+        }
+      });
+    }
 }
