@@ -4,10 +4,21 @@ define(['../../data/data_module', ], function(dataModule) {
 
   data = new dataModule();
 
+  function checkIfInPast(start) {
+    var classToAdd = "";
+
+    if (start < new Date())
+      classToAdd = 'past-event';
+
+    return classToAdd;
+  }
+
   // event template
   function createEventHtml(title, start, id) {
 
-    return  '<li class="list-group-item">' +
+    var classToAdd = checkIfInPast(start);
+
+    return  '<li class="list-group-item ' + classToAdd + '">' +
               '<a href="#" >' +
                 '<h6>' + title + '</h6>' +
                 '<p><small class="text-muted">' + start + '</small></p>' +
