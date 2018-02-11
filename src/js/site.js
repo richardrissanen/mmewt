@@ -1,24 +1,25 @@
-var filterPosts;
+var filterEvents;
+var favoriteToggles;
 
 filterEvents = function() {
-  var i, j, len, len1, post, posts, query, results, results1;
+  var i, j, len, len1, event, events, query, results, results1;
 
   query = document.getElementById('search').value.toLowerCase();
-  posts = document.getElementsByClassName('list-group-item');
+  events = document.getElementsByClassName('list-group-item');
 
   if (query.length > 0) {
 
     results = [];
 
-    for (i = 0, len = posts.length; i < len; i++) {
-      post = posts[i];
-      results.push((function(post) {
-        if (post.children[0].children[0].innerHTML.toLowerCase().indexOf(query) > -1) {
-          return post.style.display = 'block';
+    for (i = 0, len = events.length; i < len; i++) {
+      event = events[i];
+      results.push((function(event) {
+        if (event.children[0].children[0].innerHTML.toLowerCase().indexOf(query) > -1) {
+          return event.style.display = 'block';
         } else {
-          return post.style.display = 'none';
+          return event.style.display = 'none';
         }
-      })(post));
+      })(event));
     }
 
     return results;
@@ -27,11 +28,11 @@ filterEvents = function() {
 
     results2 = [];
 
-    for (j = 0, len1 = posts.length; j < len1; j++) {
-      post = posts[j];
-      results2.push((function(post) {
-        return post.style.display = 'block';
-      })(post));
+    for (j = 0, len1 = events.length; j < len1; j++) {
+      event = events[j];
+      results2.push((function(event) {
+        return event.style.display = 'block';
+      })(event));
     }
 
     return results2;
@@ -41,7 +42,7 @@ filterEvents = function() {
 ////
 // Local Storage
 ////
-var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+favoriteToggles = document.getElementsByClassName("favorite-toggle");
 
 Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
 
