@@ -5,7 +5,7 @@ define(['../../data/data_module', ], function(dataModule) {
   data = new dataModule();
 
   function checkIfInPast(start) {
-    var classToAdd = "";
+    var classToAdd = "current";
 
     if (start < new Date())
       classToAdd = 'past-event';
@@ -114,6 +114,16 @@ define(['../../data/data_module', ], function(dataModule) {
     }
   }
 
+  function autoScorllToMostCurrentEvent() {
+    document.getElementsByClassName('current')[0].scrollIntoView();
+
+    // accounts for nav and toolbar
+    var scrolledY = window.scrollY;
+
+    if(scrolledY)
+      window.scroll(0, scrolledY - 125);
+  }
+
   ////
   // Module definition
   ////
@@ -135,6 +145,7 @@ define(['../../data/data_module', ], function(dataModule) {
         initializeFavoriteTool();
         initializeFavoriteEventsToggles();
         populateFavorites();
+        autoScorllToMostCurrentEvent();
 
       };
   };
