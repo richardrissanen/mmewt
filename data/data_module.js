@@ -163,8 +163,20 @@ define([], function() {
         }
     ]
 
+    function sortByStart(eventList) {
+        eventList.sort(function(a, b) {
+            keyA = a.startTime;
+            keyB = b.startTime;
+
+            if(keyA < keyB) return -1;
+            if(keyA > keyB) return 1;
+            return 0;
+        });
+    }
+
     var dataModule = function() {
         this.events = function() {
+            eventsList = sortByStart(eventList);
             return eventList;
         }
     }
