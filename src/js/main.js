@@ -1,1 +1,1 @@
-requirejs(['./site'])
+requirejs(['./app'])
