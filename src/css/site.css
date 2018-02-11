@@ -15,10 +15,11 @@ main.container {
   max-width: 960px;
 }
 
-#events { margin-top: 46px; }
+#events { margin-top: 34px; }
 
 #favorite {
-  margin-top: -15px;
+  height: 59px;
+  margin-top: -10px;
 }
 
 #logo {
@@ -28,7 +29,8 @@ main.container {
 
 #tools {
   background-color: #ccc;
-  padding: 15px 0 0 0;
+  list-style-type: none;
+  padding: 10px 0 0 0;
   position: fixed;
   top: 55px;
   z-index: 100;
@@ -59,7 +61,7 @@ main.container {
 }
 
 .star {
-  font-size: 3em;
+  font-size: 2.5em;
 }
 
 .star:after {

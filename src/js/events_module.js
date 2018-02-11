@@ -114,6 +114,11 @@ define(['../../data/data_module', ], function(dataModule) {
     }
   }
 
+  // Allows scroling beyond bottom of list
+  function addBottomPaddingToEventsUnorderedList() {
+    document.getElementById("events").style.paddingBottom = window.innerHeight - 112 - 101 + "px";
+  }
+
   function autoScorllToMostCurrentEvent() {
     document.getElementsByClassName('current')[0].scrollIntoView();
 
@@ -121,7 +126,7 @@ define(['../../data/data_module', ], function(dataModule) {
     var scrolledY = window.scrollY;
 
     if(scrolledY)
-      window.scroll(0, scrolledY - 125);
+      window.scroll(0, scrolledY - 112);
   }
 
   ////
@@ -145,6 +150,7 @@ define(['../../data/data_module', ], function(dataModule) {
         initializeFavoriteTool();
         initializeFavoriteEventsToggles();
         populateFavorites();
+        addBottomPaddingToEventsUnorderedList();
         autoScorllToMostCurrentEvent();
 
       };
