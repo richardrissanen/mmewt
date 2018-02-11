@@ -24,19 +24,31 @@
 
   </head>
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">MMEWT</a>
-    <form class="form-inline my-2 my-lg-0">
-      <input id="search" class="form-control mr-sm-1" type="text" placeholder="Search" aria-label="Search" onkeyup="filterEvents()">
-    </form>
-    <a href="#" id="favorite" class="star empty"></a>
+  <nav class="navbar navbar-dark bg-dark fixed-top text-center" >
+    <a id="logo" class="navbar-brand" href="#">MMEWT</a>
   </nav>
 
   <main role="main" class="container">
 
-    <ul class="list-group">
+    <ul id="tools" class="list-group">
+
+      <li class="container">
+
+        <div class="row">
+          <form class="col-7 offset-1">
+              <input id="search" class="form-control" type="text" placeholder="Search" aria-label="Search" onkeyup="filterEvents()">
+            </form>
+
+          <a href="#" id="favorite" class="col-1 offset-1 star empty"></a>
+        </div>
+
+      </li>
+    </ul>
+
+    <ul id="events" class="list-group">
+
       <li class="list-group-item">
-        <a href="#" onclick="alert('clicked');">
+        <a href="#" onclick="alert('Throwback Thursdays @ 4pm');">
           <h6>Throwback Thursdays</h6>
           <p><small class="text-muted">4:00pm</small></p>
         </a>

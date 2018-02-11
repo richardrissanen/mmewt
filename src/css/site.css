@@ -7,12 +7,31 @@ body {
 }
 
 main.container {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   width: 100%;
   max-width: 960px;
+}
+
+#events { margin-top: 46px; }
+
+#favorite {
+  margin-top: -15px;
+}
+
+#logo {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#tools {
+  background-color: #ccc;
+  padding: 15px 0 0 0;
+  position: fixed;
+  top: 55px;
+  z-index: 100;
 }
 
 .hide { display: none; }
