@@ -1,8 +1,9 @@
-define(['../../data/data_module', ], function(dataModule) {
+define(['../../data/data_module', './search_module'], function(dataModule, searchModule) {
   var data,
       createEvents;
 
   data = new dataModule();
+  searchModule = new searchModule();
 
   function checkIfInPast(start) {
     var classToAdd = "current";
@@ -40,8 +41,28 @@ define(['../../data/data_module', ], function(dataModule) {
           if (favorites !== null && typeof favorites !== 'undefined') {
             var favoritesArray = JSON.parse(favorites);
             Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
-              if (favoritesArray.indexOf(toggle.getAttribute("data-id")) == -1) { 
-                toggle.parentNode.classList.toggle('hide');
+              // id is NOT a favorite
+              if (favoritesArray.indexOf(toggle.getAttribute("data-id")) == -1) {
+                var listItem = toggle.parentNode;
+                var search = document.getElementById('search');
+                var searchValue =search.value;
+                var favorite = document.getElementById('favorite');
+
+                if (favorite.classList.contains('empty')) {
+                  if (search.value.length > 0) { // id is NOT a favorite, favorite is off with search criteria
+                    var query = document.getElementById('search').value.toLowerCase();
+                    searchModule.search(query)
+                  } else { // id is NOT a favorite, favorite off without search criteria
+                      listItem.classList.remove('hide');
+                  }
+                } else {
+                  if (searchValue != "" && searchValue.length > 0) {// id is NOT a favorite, favorite on with search criteria
+                    if (!listItem.classList.contains('hide'))
+                      listItem.classList.add('hide');
+                  } else { // id is NOT a favorite, favorite on without search criteria
+                    listItem.classList.add('hide');
+                  }
+                }
               }
             });
           }
