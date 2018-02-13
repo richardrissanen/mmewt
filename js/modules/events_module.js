@@ -1,4 +1,4 @@
-define(['../../data/data_module', './search_module', './scroll_module'], function(dataModule, searchModule, scrollModule) {
+define(['../../data/data_module', './search_module', './scroll_module', './date_format_module'], function(dataModule, searchModule, scrollModule, dateFormatModule) {
   var data,
       createEvents,
       scroll;
@@ -6,6 +6,7 @@ define(['../../data/data_module', './search_module', './scroll_module'], functio
   data = new dataModule();
   searchModule = new searchModule();
   scroll = new scrollModule();
+  dateFormat = new dateFormatModule();
 
   function checkIfInPast(start) {
     var classToAdd = "current";
@@ -20,11 +21,12 @@ define(['../../data/data_module', './search_module', './scroll_module'], functio
   function createEventHtml(title, start, id) {
 
     var classToAdd = checkIfInPast(start);
+    var transformedDate = dateFormat.transform(start);
 
     return  '<li class="list-group-item ' + classToAdd + '">' +
               '<a href="#" >' +
                 '<h6>' + title + '</h6>' +
-                '<p><small class="text-muted">' + start + '</small></p>' +
+                '<p><small class="text-muted">' + transformedDate + '</small></p>' +
               '</a>' +
               '<a href="#" class="favorite-toggle star empty" data-id="' + id + '"></a>' +
             '</li>'
