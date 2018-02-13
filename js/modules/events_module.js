@@ -23,10 +23,12 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
     var classToAdd = checkIfInPast(start);
     var transformedDate = dateFormat.transform(start);
 
-    return  '<li class="list-group-item ' + classToAdd + '">' +
-              '<h6>' + title + ' <small class="text-muted">' + transformedDate + '</small>' + '<a href="#" class="favorite-toggle star empty" data-id="' + id + '"></a>' + '</h6>' +
-              '<p>' + description + '</p>' +
-            '</li>';
+    return  `<li class="list-group-item ${classToAdd}">
+              <h6>
+                ${title} <small class="text-muted">${transformedDate}</small>
+                <a href="#" class="favorite-toggle star empty" data-id="${id}"></a></h6>
+              <p>${description}</p>
+            </li>`;
   }
 
   function initializeFavoriteTool () {
