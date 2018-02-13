@@ -63,8 +63,16 @@ small { font-size: 70%; }
   color: #ccc !important;
 }
 
+.permalink:after {
+  font-family: "EmojiSymbols", "Segoe UI Symbol";
+  font-size: 2.75em;
+  content: "\2709\FE0E";
+  position: relative;
+  top: -11px;
+}
+
 .star {
-  font-size: 1.75em;
+  font-size: 1.45em;
 }
 
 .star:after {
@@ -73,4 +81,7 @@ small { font-size: 70%; }
 
 .star.empty:after, #favorite.empty {
   content: "\2606";
+}
+.permalink, .star {
+  padding: 0 10px;
 }
