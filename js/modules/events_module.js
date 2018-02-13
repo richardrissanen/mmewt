@@ -18,18 +18,15 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
   }
 
   // event template
-  function createEventHtml(title, start, id) {
+  function createEventHtml(title, start, id, description) {
 
     var classToAdd = checkIfInPast(start);
     var transformedDate = dateFormat.transform(start);
 
     return  '<li class="list-group-item ' + classToAdd + '">' +
-              '<a href="#" >' +
-                '<h6>' + title + '</h6>' +
-                '<p><small class="text-muted">' + transformedDate + '</small></p>' +
-              '</a>' +
-              '<a href="#" class="favorite-toggle star empty" data-id="' + id + '"></a>' +
-            '</li>'
+              '<h6>' + title + ' <small class="text-muted">' + transformedDate + '</small>' + '<a href="#" class="favorite-toggle star empty" data-id="' + id + '"></a>' + '</h6>' +
+              '<p>' + description + '</p>' +
+            '</li>';
   }
 
   function initializeFavoriteTool () {
@@ -47,7 +44,7 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
             Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
               // id is NOT a favorite
               if (favoritesArray.indexOf(toggle.getAttribute("data-id")) == -1) {
-                var listItem = toggle.parentNode;
+                var listItem = toggle.parentNode.parentNode;
                 var search = document.getElementById('search');
                 var searchValue =search.value;
                 var favorite = document.getElementById('favorite');
@@ -143,7 +140,7 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
 
   // Allows scroling beyond bottom of list
   function addBottomPaddingToEventsUnorderedList() {
-    document.getElementById("events").style.paddingBottom = window.innerHeight - 112 - 101 - 54 + "px";
+    document.getElementById("events").style.paddingBottom = window.innerHeight - 122 - 214 - 54 + "px";
   }
 
   ////
@@ -160,7 +157,7 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
         eventsUnorderedList.innerHTML = "";
 
         Array.prototype.forEach.call(events, function(event) {
-          var eventHtml = createEventHtml(event.title, event.startTime, event.id);
+          var eventHtml = createEventHtml(event.title, event.startTime, event.id, event.description);
           eventsUnorderedList.innerHTML += eventHtml;
         });
 

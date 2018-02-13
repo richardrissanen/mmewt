@@ -8,7 +8,7 @@ define([], function() {
       var scrolledY = window.scrollY;
 
       if(scrolledY)
-        window.scroll(0, scrolledY - 112);
+        window.scroll(0, scrolledY - 122);
     };
 
     this.toTop = function() {
