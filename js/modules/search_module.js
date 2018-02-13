@@ -15,7 +15,7 @@ define(['./scroll_module'], function(scrollModule) {
       for (i = 0, len = events.length; i < len; i++) {
         event = events[i];
         results.push((function(event) {
-          if (event.children[0].children[0].innerHTML.toLowerCase().indexOf(query) > -1) {
+          if (event.children[0].innerHTML.toLowerCase().indexOf(query) > -1) {
             event.classList.remove('hide');
           } else {
             event.classList.add('hide');

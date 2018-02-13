@@ -138,11 +138,6 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
     }
   }
 
-  // Allows scroling beyond bottom of list
-  function addBottomPaddingToEventsUnorderedList() {
-    document.getElementById("events").style.paddingBottom = window.innerHeight - 122 - 214 - 54 + "px";
-  }
-
   ////
   // Module definition
   ////
@@ -164,7 +159,6 @@ define(['../../data/data_module', './search_module', './scroll_module', './date_
         initializeFavoriteTool();
         initializeFavoriteEventsToggles();
         populateFavorites();
-        addBottomPaddingToEventsUnorderedList();
         scroll.ToMostCurrentEvent();
 
       };
