@@ -6,6 +6,11 @@ body {
   padding-top: 5rem;
 }
 
+form {
+  margin-top: 20px;
+  padding: 0 15px;
+}
+
 main.container {
   margin-left: auto !important;
   margin-right: auto !important;
@@ -15,7 +20,7 @@ main.container {
   max-width: 960px;
 }
 
-nav { 
+nav {
   max-width: 960px;
 }
 
