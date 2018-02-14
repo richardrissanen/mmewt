@@ -4,6 +4,10 @@ define(['./scroll_module'], function(scrollModule) {
 
   scroll = new scrollModule();
 
+  function isHidden(element) {
+    return (element.offsetParent === null)
+  }
+
   function filterEvents(query) {
     events = document.getElementsByClassName('list-group-item');
 
