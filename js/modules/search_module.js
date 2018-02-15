@@ -1,39 +1,70 @@
-define([], function() {
+define(['./scroll_module'], function(scrollModule) {
 
-  function transfromTime(hours, minutes) {
-    var suffix = "am";
+  var scroll;
 
-    if (hours == 0) {
-      hours = 12;
-    } else {
-      if (hours > 12) {
-        suffix = "pm";
-        hours = hours - 12;
-      } else {
-        hours = hours;
+  scroll = new scrollModule();
+
+  function isHidden(element) {
+    return (element.offsetParent === null)
+  }
+
+  function filterEvents(query) {
+    var i, j, len, len1, event, events, results, results1;
+
+    events = document.getElementsByClassName('list-group-item');
+
+    if (query.length > 0) {
+      scroll.toTop();
+
+      results = [];
+
+      for (i = 0, len = events.length; i < len; i++) {
+        event = events[i];
+        results.push((function(event) {
+          if (event.children[0].innerHTML.toLowerCase().indexOf(query) > -1) {
+            event.classList.remove('hide');
+          } else {
+            event.classList.add('hide');
+          }
+        })(event));
       }
+
+      return results;
+
+    } else {
+      scroll.ToMostCurrentEvent();
+
+      results2 = [];
+
+      for (j = 0, len1 = events.length; j < len1; j++) {
+        event = events[j];
+        results2.push((function(event) {
+          event.classList.remove('hide');
+        })(event));
+      }
+
+      return results2;
     }
-
-    hours = checkForUnderTen(hours)
-    minutes = checkForUnderTen(minutes);
-
-    return hours + ":" + minutes + suffix;
   }
 
-  function checkForUnderTen(dateFragment) {
-    if (dateFragment < 10) 
-      dateFragment = "0" + dateFragment;
+  var searchModule = function() {
+      this.initialize = function() {
 
-    return dateFragment;
+        document.getElementById('search').addEventListener("keyup", function(event){
+          var query = document.getElementById('search').value.toLowerCase();
+
+          // reset favoriteTool
+          document.getElementById('favorite').classList.add('empty');
+
+          filterEvents(query);
+
+        });
+      }
+
+      this.search = function(query) {
+        filterEvents(query);
+      }
   }
 
-  var dateFormatModule = function() {
-    this.transform = function(date) {
-      var month = date.getMonth() + 1;
-      return date.getFullYear() + '/' + checkFoUnderTen(month) + '/' + checkForUnderTen(date.getDate()) + " at " + transfromTime(date.getHours(), date.getMinutes());
-    };
-  }
-
-  return dateFormatModule;
-
+  return searchModule;
 });
