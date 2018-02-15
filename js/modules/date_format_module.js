@@ -14,17 +14,23 @@ define([], function() {
       }
     }
 
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
+    hours = checkForUnderTen(hours)
+    minutes = checkForUnderTen(minutes);
 
     return hours + ":" + minutes + suffix;
+  }
+
+  function checkForUnderTen(dateFragment) {
+    if (dateFragment < 10) 
+      dateFragment = "0" + dateFragment;
+
+    return dateFragment;
   }
 
   var dateFormatModule = function() {
     this.transform = function(date) {
       var month = date.getMonth() + 1;
-      return date.getFullYear() + '/' + month + '/' + date.getDate() + " at " + transfromTime(date.getHours(), date.getMinutes());
+      return date.getFullYear() + '/' + checkFoUnderTen(month) + '/' + checkForUnderTen(date.getDate()) + " at " + transfromTime(date.getHours(), date.getMinutes());
     };
   }
 
