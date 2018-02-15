@@ -1,52 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Mutable Mobile Events Web Template">
-    <meta name="author" content="Richard Rissanen">
+define(
+  ['../../data/data_module', './search_module', './scroll_module', './template'], 
+  function(dataModule, searchModule, scrollModule, templateModule) {
+  var data, createEvents, scroll, upNext, all, favoriteToggles;
 
-    <meta property="og:title" content="MMEWT" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="" />
-    <meta property="og:image" content="" />
+  data = new dataModule();
+  searchModule = new searchModule();
+  scroll = new scrollModule();
+  template = new templateModule();
 
-    <link rel="icon" href="">
+  upNext = document.getElementById("up-next");
+  favorite = document.getElementById('favorite');
+  all = document.getElementById("all");
 
-    <title>
-        MMEWT
-    </title>
+  function hideSearch(bool) {
+    if (bool)
+      document.getElementById("search").parentNode.classList.add("hide");
+    else
+      document.getElementById("search").parentNode.classList.remove("hide");
+  }
 
-      <link rel="stylesheet" href="./css/bootstrap.min.css">
-      <link rel="stylesheet" href="./css/site.css">
-      <link href="http://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">
+  function changeActiveLink(activeLink) {
+    switch(activeLink) {
+      case "all":
+        all.classList.add('active');
+        favorite.classList.remove('active');
+        upNext.classList.remove('active');
+        break;
+      case "favorite":
+        all.classList.remove('active');
+        favorite.classList.add('active');
+        upNext.classList.remove('active');
+        break;
+      case "up-next":
+        all.classList.remove('active');
+        favorite.classList.remove('active');
+        upNext.classList.add('active');
+        break;
+    }
+  }
 
-  </head>
-<body>
-  <nav class="navbar navbar-dark bg-dark fixed-top text-center ml-auto mr-auto" >
-    <a id="logo" class="navbar-brand" href="index.html">MMEWT</a>
-  </nav>
+  function isThisBlank(toBeChecked) {
+    return (toBeChecked === null || typeof toBeChecked === 'undefined');
+  }
 
-  <main role="main" class="container">
+  function isIdInArray(eventId, favoritesArray) {
+    return (favoritesArray.indexOf(eventId) === -1);
+  } 
 
-    <ul id="tools" class="list-group">
-      <li class="">
-        <a href="#" id="all">All</a>
-        <a href="#" id="favorite" class="active">Favorites</a>
-        <a href="#" id="up-next">Up Next</a>
-      </li>
-    </ul>
+  function updateFavoriteToggleClass(favoritesArray, toggle) {
+    var listItem = toggle.parentNode.parentNode;
+    var eventId = toggle.getAttribute("data-id");
 
-    <form class="hide">
-        <input id="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
-    </form>
+    if (isIdInArray(eventId, favoritesArray)) {
+      listItem.classList.add('hide');
+    } else {
+      listItem.classList.remove('hide');
+    }
+  }
 
-    <ul id="events" class="list-group">
+  function setFavoriteLinkListener () {
 
-    </ul>
+    favorite.addEventListener("click", function(event){
+      event.preventDefault();
 
-    <p class="text-muted ml-auto mr-auto text-center"><small>MMEWT is open source.<br/>You can find the code <a href="https://github.com/richardrissanen/mmewt">here.</a></small></p>
-    <script data-main="js/main" src="js/require.js"></script>
-  </main>
-</body>
+      changeActiveLink(all.id);
+
+      hideSearch(true);
+
+      var favorites = localStorage.getItem('favorites');
+
+      if (!isThisBlank(favorites)) {
+        var favoritesArray = JSON.parse(favorites);
+        var emptyStateHtml = document.getElementById("empty-state-container");
+        var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+
+        if (favoritesArray.length < 1) { emptyStateHtml.parentNode.classList.remove('hide'); }
+
+        Array.prototype.forEach.call(favoriteToggles, function(toggle, i) {
+          updateFavoriteToggleClass(favoritesArray, toggle)
+        });
+      } 
+
+    });
+  }
+
+  function displayAll() {
+    var favorites = localStorage.getItem('favorites');
+    var emptyStateHtml = document.getElementById("empty-state-container");
+    var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+
+    emptyStateHtml.parentNode.classList.add('hide');
+
+    var favoritesArray = JSON.parse(favorites);
+
+    Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
+      var listItem = toggle.parentNode.parentNode;
+
+      listItem.classList.remove('hide');
+    });
+  }
+
+  function setUpNextLinkListener() {
+
+    upNext.addEventListener("click", function(event){
+      event.preventDefault();
+
+      changeActiveLink(upNext.id);
+
+      hideSearch(true);
+
+      displayAll();
+    });
+  }
+
+  function setAllLinkListener() {
+    all.addEventListener("click", function(event){
+      event.preventDefault();
+
+      setUpNextLinkListener();
+
+      changeActiveLink(all.id);
+
+      hideSearch(false);
+
+      displayAll();
+
+      scroll.toTop();
+    });
+  }
+
+  function setEventsFavoriteToggles() {
+    var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+
+    Array.prototype.forEach.call(favoriteToggles, function(toggle, i){  
+      toggle.addEventListener("click", function(event){
+        event.preventDefault();
+
+        var eventId, favoritesArray, favorites, favoritesArrayString;
+
+        this.classList.toggle('empty');
+
+        eventId = this.getAttribute('data-id');
+        favoritesArray = new Array;
+
+        favorites = localStorage.getItem('favorites');
+
+        if (!isThisBlank(favorites)) {
+          favoritesArray = JSON.parse(favorites);
+
+          (isIdInArray(eventId, favoritesArray)) ? 
+            favoritesArray.push(eventId) :
+              favoritesArray = favoritesArray.filter(function (favoriteId) { return favoriteId !== eventId; });
+        }
+        else {
+          favoritesArray.push(eventId);
+        }
+
+        favoritesArrayString = JSON.stringify(favoritesArray);
+        localStorage.setItem('favorites', favoritesArrayString);
+      });
+    });
+  }
+
+  function populateFavorites() {
+    var favorites = localStorage.getItem('favorites');
+
+    if (!isThisBlank(favorites)) {
+      var favoritesArray = JSON.parse(favorites);
+      var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+      Array.prototype.forEach.call(favoriteToggles, function(toggle, i){
+        var eventId = toggle.getAttribute("data-id");
+        if (!isIdInArray(eventId, favoritesArray)) { 
+          toggle.classList.remove('empty');
+        }
+      });
+    }
+  }
+
+  function initializeEvents() {
+    var events, eventsUnorderedList,  emptyStateHtml;
+    emptyStateHtml = document.getElementById("empty-state-container");
+
+    events = data.events();
+    eventsUnorderedList = document.getElementById('events');
+
+    eventsUnorderedList.innerHTML = "";
+
+    emptyStateHtml = template.createEmptyState();
+    eventsUnorderedList.innerHTML += emptyStateHtml;
+
+    // creates all events and their favorite toggles
+    Array.prototype.forEach.call(events, function(event) {
+      var eventHtml = template.createEventHtml(event.title, event.startTime, event.id, event.description);
+      eventsUnorderedList.innerHTML += eventHtml;
+    });
+
+    setFavoriteLinkListener();
+    setUpNextLinkListener();
+    setAllLinkListener();
+    setEventsFavoriteToggles();
+    populateFavorites();
+  }
+
+  function initializeNoLocalStorageState() {
+    noLocalStorageState = template.createNoLocalStorageState();
+    eventsUnorderedList.innerHTML += noLocalStorageState;
+  }
+
+  ////
+  // Module definition
+  ////
+  var eventsModule = function() {
+    this.initialize = function() {
+      var isThereLocalStorage = (typeof (Storage) !== "undefined");
+
+      (!isThereLocalStorage) ? initializeEvents() : initializeNoLocalStorageState();
+    };
+  };
+
+  return eventsModule;
+});
