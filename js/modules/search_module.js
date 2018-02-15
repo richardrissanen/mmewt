@@ -9,6 +9,8 @@ define(['./scroll_module'], function(scrollModule) {
   }
 
   function filterEvents(query) {
+    var i, j, len, len1, event, events, results, results1;
+
     events = document.getElementsByClassName('list-group-item');
 
     if (query.length > 0) {
@@ -49,12 +51,10 @@ define(['./scroll_module'], function(scrollModule) {
       this.initialize = function() {
 
         document.getElementById('search').addEventListener("keyup", function(event){
-          var i, j, len, len1, event, events, query, results, results1;
+          var query = document.getElementById('search').value.toLowerCase();
 
           // reset favoriteTool
           document.getElementById('favorite').classList.add('empty');
-
-          query = document.getElementById('search').value.toLowerCase();
 
           filterEvents(query);
 
