@@ -40,8 +40,9 @@ small { font-size: 70%; }
 }
 
 #events {
+  list-style-type: none;
   margin-bottom: 10px;
-  margin-top: -15px;
+  margin-top: 10px;
 }
 
 #search {
@@ -69,14 +70,27 @@ small { font-size: 70%; }
   border-bottom-color: #007bff;
 }
 
+.list-group-item a.accordion-toggle {
+  /* float: none; */
+  margin-top: -19px;
+  margin-right: 15px;
+}
+
+.accordion-toggle:after { 
+  content: "\25b2";
+}
+.accordion-toggle.expand:after {
+  content: "\25BC";
+}
+
 .big-star:after {
   background-color: #e9ecef;
   border: 2px solid #343a40;
   border-radius: 8px;
   color: #007bff;
-  content: "\2606";
   font-size: 5em;
   padding: 15px 30px;
+  content: "\2606";
 }
 
 .hide { display: none; }
@@ -97,20 +111,8 @@ small { font-size: 70%; }
   margin-top: -25px;
 }
 
-.past-event h6, .past-event h6 small, .past-event h6 a, .past-event p {
+.past-event h6, .past-event h6 small, .past-event a, .past-event p {
   color: #ccc !important;
-}
-
-.permalink:after {
-  font-family: "EmojiSymbols", "Segoe UI Symbol";
-  font-size: 2.75em;
-  content: "\2709\FE0E";
-  position: relative;
-  top: -11px;
-}
-
-.star {
-  font-size: 1.45em;
 }
 
 .star:after {
@@ -120,6 +122,8 @@ small { font-size: 70%; }
 .star.empty:after, #favorite.empty {
   content: "\2606";
 }
-.permalink, .star {
+.star {
+  font-size: 1.45em;
+  margin-left: 10px;
   padding: 0 10px;
 }
