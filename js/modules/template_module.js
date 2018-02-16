@@ -1,4 +1,4 @@
-define(["./date_module"], function(dateModule) {
+define(["./date_format_module"], function(dateFormatModule) {
 
     var dateFormat = new dateFormatModule();
 
@@ -23,7 +23,8 @@ define(["./date_module"], function(dateModule) {
                             ${title} <small class="text-muted">${transformedDate}</small>
                             <a href="#" class="favorite-toggle star empty" data-id="${id}"></a>
                         </h6>
-                        <p>${description}</p>
+                        <a href="#" class="accordion-trigger plus">
+                        <p class="accordion hide">${description}</p>
                     </li>`;
         }
 
