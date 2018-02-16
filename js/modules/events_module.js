@@ -184,7 +184,7 @@ define(
         this.classList.toggle("expand");
         var parent = this.parentNode;
         var children = parent.children;
-        children[2].children[0].classList.toggle("hide");
+        children[2].classList.toggle("hide");
       });
     });
   }
