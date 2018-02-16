@@ -1,5 +1,5 @@
 define(
-  ['../../data/data_module', './search_module', './scroll_module', './template'], 
+  ['../../data/data_module', './search_module', './scroll_module', './template_module'], 
   function(dataModule, searchModule, scrollModule, templateModule) {
   var data, createEvents, scroll, upNext, all, favoriteToggles;
 
@@ -177,12 +177,11 @@ define(
     }
   }
 
-  function initializeEvents() {
-    var events, eventsUnorderedList,  emptyStateHtml;
+  function initializeEvents(eventsUnorderedList) {
+    var events,  emptyStateHtml;
     emptyStateHtml = document.getElementById("empty-state-container");
 
     events = data.events();
-    eventsUnorderedList = document.getElementById('events');
 
     eventsUnorderedList.innerHTML = "";
 
@@ -202,7 +201,7 @@ define(
     populateFavorites();
   }
 
-  function initializeNoLocalStorageState() {
+  function initializeNoLocalStorageState(eventsUnorderedList) {
     noLocalStorageState = template.createNoLocalStorageState();
     eventsUnorderedList.innerHTML += noLocalStorageState;
   }
@@ -213,8 +212,9 @@ define(
   var eventsModule = function() {
     this.initialize = function() {
       var isThereLocalStorage = (typeof (Storage) !== "undefined");
+      var eventsUnorderedList = document.getElementById('events');
 
-      (!isThereLocalStorage) ? initializeEvents() : initializeNoLocalStorageState();
+      (!isThereLocalStorage) ? initializeEvents(eventsUnorderedList) : initializeNoLocalStorageState(eventsUnorderedList);
     };
   };
 
