@@ -106,7 +106,6 @@ small { font-size: 70%; }
 
 .list-group-item a {
   display: inline-block;
-  padding-top: 18px;
   float: right;
   margin-top: -25px;
 }

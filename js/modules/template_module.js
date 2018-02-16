@@ -20,7 +20,7 @@ define(["./date_format_module"], function(dateFormatModule) {
 
             return  `<li id="event${id}"class="list-group-item event-list ${classToAdd} hide">
                         <h6>
-                            ${title} <small class="text-muted">${transformedDate}</small>
+                            ${title} <br/><small class="text-muted">${transformedDate}</small>
                             <a href="#" class="favorite-toggle star empty" data-id="${id}"></a>
                         </h6>
                         <a href="#" class="accordion-toggle expand"></a>
