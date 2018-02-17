@@ -67,25 +67,39 @@ define(
 
       hideSearch(true);
 
-      var favorites = localStorage.getItem('favorites');
+      displayFavorites();
 
-      if (!isThisBlank(favorites)) {
-        var favoritesArray = JSON.parse(favorites);
-        var emptyStateHtml = document.getElementById("empty-state-container");
-        var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+    });
+  }
 
-        if (favoritesArray.length < 1) {
-          emptyStateHtml.parentNode.classList.remove('hide');
-          Array.prototype.forEach.call(favoriteToggles, function(favoriteToggle, i) {
-            favoriteToggle.parentNode.parentNode.classList.add('hide')
-          });
-        } else {
-          Array.prototype.forEach.call(favoriteToggles, function(toggle, i) {
-            updateFavoriteToggleClass(favoritesArray, toggle)
-          });
-        }
+  function displayFavorites() {
+    var favorites = localStorage.getItem('favorites');
+    var emptyStateHtml = document.getElementById("empty-state-container");
+    var favoriteToggles = document.getElementsByClassName("favorite-toggle");
+
+    if (!isThisBlank(favorites)) {
+      var favoritesArray = JSON.parse(favorites);
+
+      if (favoritesArray.length < 1) {
+        showEmptyState(emptyStateHtml, favoriteToggles);
+      } else {
+        emptyStateHtml.parentNode.classList.add("hide");
+        Array.prototype.forEach.call(favoriteToggles, function(toggle, i) {
+          updateFavoriteToggleClass(favoritesArray, toggle);
+        });
       }
+    } else { // favorites is blank on first visit
+      showEmptyState(emptyStateHtml, favoriteToggles);
+    }
 
+  }
+
+  function showEmptyState(emptyStateHtml, favoriteToggles) {
+    console.log("showEmpty")
+    console.log("emptyStateHtml = " + emptyStateHtml + "favoriteToggles = " + favoriteToggles)
+    emptyStateHtml.parentNode.classList.remove('hide');
+    Array.prototype.forEach.call(favoriteToggles, function(favoriteToggle, i) {
+      favoriteToggle.parentNode.parentNode.classList.add('hide');
     });
   }
 
@@ -227,7 +241,8 @@ define(
     setAllLinkListener();
     setEventsFavoriteToggles();
     populateFavorites();
-    setAccordionToggles()
+    setAccordionToggles();
+    displayFavorites();
   }
 
   function initializeNoLocalStorageState(eventsUnorderedList) {
