@@ -102,8 +102,8 @@ small { font-size: 70%; }
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
-  left: -9px;
-  padding: 12px;
+  left: -12px;
+  padding: 9px;
 }
 .star.empty { background-image: url("../images/active_empty_star.png"); }
 .past-event .star { background-image: url("../images/disabled_favorite_star.png"); }
