@@ -97,17 +97,14 @@ small { font-size: 70%; }
 
 .past-event h6, .past-event h6 small, .past-event a, .past-event p { color: #ccc !important; }
 
-.star:after { content: "\2605"; }
-
-.star.empty:after { content: "\2606"; }
 .star {
-  font-size: 1.45em;
-  margin-left: 10px;
-  padding: 0 10px;
+  background-image: url("../images/active_favorite_star.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  left: -9px;
+  padding: 12px;
 }
-
-@supports (-webkit-overflow-scrolling: touch) {
-  /* CSS specific to iOS devices */
-  .star { font-size: 1.55em; }
-  .star.empty:after { font-size: 1.45em; }
-}
+.star.empty { background-image: url("../images/active_empty_star.png"); }
+.past-event .star { background-image: url("../images/disabled_favorite_star.png"); }
+.past-event .star.empty { background-image: url("../images/disabled_empty_star.png"); }
