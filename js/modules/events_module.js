@@ -1,7 +1,7 @@
 define(
   ['../../data/data_module', './search_module', './scroll_module', './template_module'], 
   function(dataModule, searchModule, scrollModule, templateModule) {
-  var data, createEvents, scroll, upNext, all, favoriteToggles;
+  var data, createEvents, scroll, upNext, all, favoriteToggles, hash;
 
   data = new dataModule();
   searchModule = new searchModule();
@@ -63,13 +63,18 @@ define(
     favorite.addEventListener("click", function(event){
       event.preventDefault();
 
-      changeActiveLink(favorite.id);
+      window.location = '#favorites';
 
-      hideSearch(true);
-
-      displayFavorites();
-
+      showFavorites();
     });
+  }
+
+  function showFavorites() {
+    changeActiveLink(favorite.id);
+
+    hideSearch(true);
+
+    displayFavorites();
   }
 
   function displayFavorites() {
@@ -133,26 +138,38 @@ define(
     upNext.addEventListener("click", function(event){
       event.preventDefault();
 
-      changeActiveLink(upNext.id);
+      window.location = '#upNext'
 
-      hideSearch(true);
-
-      displayUpNext();
+      showUpNext();
     });
+  }
+
+  function showUpNext() {
+    changeActiveLink(upNext.id);
+
+    hideSearch(true);
+
+    displayUpNext();
   }
 
   function setAllLinkListener() {
     all.addEventListener("click", function(event){
       event.preventDefault();
 
-      changeActiveLink(all.id);
+      window.location = '#all'
 
-      hideSearch(false);
-
-      displayAll();
-
-      scroll.toTop();
+      showAll();
     });
+  }
+
+  function showAll() {
+    changeActiveLink(all.id);
+
+    hideSearch(false);
+
+    displayAll();
+
+    scroll.toTop();
   }
 
   function setEventsFavoriteToggles() {
@@ -243,6 +260,25 @@ define(
     populateFavorites();
     setAccordionToggles();
     displayFavorites();
+
+    // Yuck polling
+    setInterval(function(){
+        if (window.location.hash != hash) {
+            hash = window.location.hash;
+
+            switch(hash) {
+              case '#all':
+                showAll();
+                break;
+              case '#upNext':
+                showUpNext();
+                break;
+              case '#favorites':
+                showFavorites();
+                break;
+            }
+        }
+    }, 100);
   }
 
   function initializeNoLocalStorageState(eventsUnorderedList) {
