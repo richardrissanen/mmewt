@@ -8,7 +8,7 @@
 * Solution
   * Deliver a stripped down solution that only offers the most relevant features (index of events, favorites, events currently happening)
 * Tech
-  * Leverage Angular 4 and static JSON to create a fast SPA as a MVP
+  * Leverage VanillaJS, RequireJS and static JSON to create a fast SPA as a MVP
 
 ## Event Model
 
