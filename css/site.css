@@ -108,3 +108,30 @@ small { font-size: 70%; }
 .star.empty { background-image: url("../images/active_empty_star.png"); }
 .past-event .star { background-image: url("../images/disabled_favorite_star.png"); }
 .past-event .star.empty { background-image: url("../images/disabled_empty_star.png"); }
+
+/* Accessibility helpers */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Favorite-button visuals and focus styles */
+.favorite-toggle {
+  background: none;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+  min-width: 36px;
+  min-height: 36px;
+}
+.favorite-toggle:focus {
+  outline: 3px solid rgba(0,123,255,0.5);
+  outline-offset: 2px;
+}
