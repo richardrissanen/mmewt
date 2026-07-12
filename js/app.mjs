@@ -1,5 +1,3 @@
-import { EVENTS } from '../data/events.mjs';
-
 // App module: render events and wire up interactions.
 const search = document.getElementById('search');
 const list = document.getElementById('events');
@@ -128,7 +126,20 @@ function init(events){
   updateFavoriteButtons();
 }
 
-// Initialize on DOM ready using imported EVENTS
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => init(EVENTS)); else init(EVENTS);
+// Initialize on DOM ready using global EVENTS where available,
+// fall back to dynamic import of the module if needed.
+function start(){
+  const eventsGlobal = (typeof window !== 'undefined' && window.EVENTS) ? window.EVENTS : null;
+  if (eventsGlobal) return init(eventsGlobal);
+  // try dynamic import (if server supports modules)
+  import('../data/events.mjs').then(mod => {
+    if (mod && mod.EVENTS) init(mod.EVENTS);
+  }).catch(err => {
+    console.error('No events available', err);
+    // nothing else to do
+  });
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 
 export default init;

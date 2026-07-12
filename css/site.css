@@ -95,6 +95,13 @@ small { font-size: 70%; }
   margin-top: -25px;
 }
 
+/* Ensure favorite buttons align like previous anchor-star */
+.list-group-item .favorite-toggle {
+  display: inline-block;
+  float: right;
+  margin-top: -25px;
+}
+
 .past-event h6, .past-event h6 small, .past-event a, .past-event p { color: #ccc !important; }
 
 .star {
