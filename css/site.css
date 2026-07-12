@@ -48,14 +48,19 @@ small { font-size: 70%; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
+  width: 100%;
+  max-width: 960px;
   background-color: #e9ecef;
   border-bottom: 2px solid rgba(0,0,0,0.2);
   padding: 5px 0 10px;
   position: fixed;
   top: 55px;
   z-index: 100;
-  max-width: 960px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 
 #tools input[type="radio"] {
