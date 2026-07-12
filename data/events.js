@@ -1,7 +1,7 @@
 /* Events data as a global for unified runtime */
 window.EVENTS = [
-  { id: 1, title: "Christmas Eve", description: "Lorem ipsum...", startTime: "2026-12-24T00:00:00" },
-  { id: 2, title: "Christmas Day", description: "Lorem ipsum...", startTime: "2026-12-25T00:00:00" },
+  { id: 1, title: "Christmas Eve", description: "Lorem ipsum...", startTime: "2025-12-24T00:00:00" },
+  { id: 2, title: "Christmas Day", description: "Lorem ipsum...", startTime: "2025-12-25T00:00:00" },
   { id: 3, title: "New Years Eve", description: "Lorem ipsum...", startTime: "2026-12-31T00:00:00" },
   { id: 4, title: "New Years Day", description: "Lorem ipsum...", startTime: "2027-01-01T00:00:00" },
   { id: 5, title: "Groundhog Day", description: "Lorem ipsum...", startTime: "2027-02-02T05:59:59" },

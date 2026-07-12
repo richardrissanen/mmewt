@@ -103,6 +103,15 @@ small { font-size: 70%; }
 }
 
 .past-event h6, .past-event h6 small, .past-event a, .past-event p { color: #ccc !important; }
+/* Also target the summary-based structure used for events */
+.past-event summary,
+.past-event summary small,
+.past-event summary a,
+.past-event p {
+  color: #999 !important;
+  opacity: 0.65;
+}
+.past-event .favorite-toggle { opacity: 0.65; }
 
 .star {
   background-image: url("../images/active_favorite_star.png");

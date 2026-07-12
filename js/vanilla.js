@@ -90,6 +90,12 @@
     li.className = 'list-group-item event-list';
     li.setAttribute('data-start', e.startTime);
 
+    // mark past events for styling
+    try{
+      var startDate = new Date(e.startTime);
+      if (startDate < new Date()) li.classList.add('past-event');
+    }catch(ex){}
+
     var details = document.createElement('details');
     var summary = document.createElement('summary');
 
