@@ -47,7 +47,6 @@ small { font-size: 70%; }
 #tools {
   background-color: #e9ecef;
   border-bottom: 2px solid rgba(0,0,0,0.2);
-  list-style-type: none;
   padding: 5px 0;
   position: fixed;
   top: 55px;
@@ -55,12 +54,31 @@ small { font-size: 70%; }
   max-width: 960px;
 }
 
-#tools a {
-  padding: 5px 15px;
-  border-bottom: 2px solid transparent;
+#tools input[type="radio"] {
+  display: none;
 }
 
-#tools a.active { border-bottom-color: #007bff; }
+#tools label {
+  display: inline-block;
+  padding: 5px 15px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+#tab-all:checked + label,
+#tab-favorites:checked + label,
+#tab-up-next:checked + label {
+  border-bottom-color: #007bff;
+}
+
+#search-form {
+  display: none;
+  margin-top: 10px;
+}
+
+#tab-all:checked ~ #search-form {
+  display: block;
+}
 
 .list-group-item a.accordion-toggle {
   margin-top: -19px;

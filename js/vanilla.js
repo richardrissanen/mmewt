@@ -1,9 +1,9 @@
 (function(){
   var search = document.getElementById('search');
-  var searchForm = document.getElementById('search-form');
   var list = document.getElementById('events');
   var favoritesKey = 'favorites';
   var currentView = 'all';
+  var tabInputs = document.querySelectorAll('input[name="tab"]');
 
   function loadFavorites(){
     try{
@@ -54,7 +54,6 @@
   // View links: All / Favorites / Up Next
   function showView(view){
     currentView = view;
-    if (searchForm) searchForm.style.display = (view === 'all') ? '' : 'none';
     if (view !== 'all' && search) search.value = '';
     var favs = loadFavorites();
     var now = new Date();
@@ -70,24 +69,13 @@
     });
   }
 
-  // Hook up tool links
-  var toolLinks = document.querySelectorAll('.tool-link');
-  function clearActive(){ document.querySelectorAll('.tool-link').forEach(function(a){a.classList.remove('active')}); }
-
-  var allLink = document.getElementById('all');
-  var favLink = document.getElementById('favorite');
-  var upNextLink = document.getElementById('up-next');
-
-  if (allLink) allLink.addEventListener('click', function(e){ e.preventDefault(); showView('all'); clearActive(); this.classList.add('active'); });
-  if (favLink) favLink.addEventListener('click', function(e){ e.preventDefault(); showView('favorites'); clearActive(); this.classList.add('active'); });
-
-  // compute and show up-next (next future event)
-  if (upNextLink) upNextLink.addEventListener('click', function(e){
-    e.preventDefault();
-    showView('up-next');
-    clearActive();
-    this.classList.add('active');
-  });
+  function bindTabs(){
+    Array.prototype.forEach.call(tabInputs, function(input){
+      input.addEventListener('change', function(){
+        if (this.checked) showView(this.value);
+      });
+    });
+  }
 
   // Render events by fetching data/events.json, then initialize
   function createEventElement(e){
@@ -140,6 +128,7 @@
 
   function loadAndRender(){
     var aria = document.getElementById('aria-status');
+    bindTabs();
     // Prefer global EVENTS var (works for file:// openings)
     if (window.EVENTS && Array.isArray(window.EVENTS)){
       try{
@@ -149,6 +138,7 @@
         data.forEach(function(e){ list.appendChild(createEventElement(e)); });
         updateFavoriteButtons();
         if (aria) aria.textContent = 'Events loaded.';
+        showView(currentView);
         return;
       }catch(e){
         console.error('Failed to render window.EVENTS', e);
