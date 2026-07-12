@@ -35,10 +35,10 @@
     });
   }
 
-  // Favorite toggle
+  // Favorite toggle (use delegation and closest to handle clicks reliably)
   list.addEventListener('click', function(e){
-    var t = e.target;
-    if (t.classList.contains('favorite-toggle')){
+    var t = e.target.closest && e.target.closest('.favorite-toggle');
+    if (t && list.contains(t)){
       e.preventDefault();
       var id = t.getAttribute('data-id');
       var favs = loadFavorites();
@@ -98,7 +98,9 @@
     var titleHtml = e.title + '<br/><small class="text-muted">' + formatDate(e.startTime) + '</small>';
     summary.innerHTML = titleHtml;
 
-    var btn = document.createElement('button');
+    // prefer anchor inside <summary> for better cross-browser behavior
+    var btn = document.createElement('a');
+    btn.href = '#';
     btn.className = 'favorite-toggle star empty';
     btn.setAttribute('data-id', String(e.id));
     btn.setAttribute('aria-label','Toggle favorite');
