@@ -26,16 +26,30 @@
     });
   }
 
+  function applyFilters(){
+    var q = (search && search.value || '').trim().toLowerCase();
+    var favs = loadFavorites();
+    var now = new Date();
+    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
+      var visible = true;
+      if (currentView === 'favorites'){
+        var id = li.querySelector('.favorite-toggle').getAttribute('data-id');
+        if (favs.indexOf(id) === -1) visible = false;
+      } else if (currentView === 'up-next') {
+        var start = new Date(li.getAttribute('data-start'));
+        if (start < now) visible = false;
+      }
+      if (visible && q){
+        var text = li.textContent.toLowerCase();
+        visible = (text.indexOf(q) !== -1);
+      }
+      li.style.display = visible ? '' : 'none';
+    });
+  }
+
   // Search filter (minimal JS)
   if (search) {
-    search.addEventListener('input', function(){
-      if (currentView !== 'all') return;
-      var q = this.value.trim().toLowerCase();
-      Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
-        var text = li.textContent.toLowerCase();
-        li.style.display = (!q || text.indexOf(q) !== -1) ? '' : 'none';
-      });
-    });
+    search.addEventListener('input', applyFilters);
   }
 
   // Favorite toggle (use delegation and closest to handle clicks reliably)
@@ -55,18 +69,7 @@
   function showView(view){
     currentView = view;
     if (view !== 'all' && search) search.value = '';
-    var favs = loadFavorites();
-    var now = new Date();
-    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
-      li.style.display = '';
-      if (view === 'favorites'){
-        var id = li.querySelector('.favorite-toggle').getAttribute('data-id');
-        if (favs.indexOf(id) === -1) li.style.display = 'none';
-      } else if (view === 'up-next') {
-        var start = new Date(li.getAttribute('data-start'));
-        if (start < now) li.style.display = 'none';
-      }
-    });
+    applyFilters();
   }
 
   function bindTabs(){
@@ -93,16 +96,28 @@
     var details = document.createElement('details');
     var summary = document.createElement('summary');
 
-    var titleHtml = e.title + '<br/><small class="text-muted">' + formatDate(e.startTime) + '</small>';
-    summary.innerHTML = titleHtml;
+    var content = document.createElement('div');
+    content.className = 'summary-content';
+
+    var title = document.createElement('div');
+    title.className = 'event-title';
+    title.textContent = e.title;
+
+    var date = document.createElement('small');
+    date.className = 'event-date';
+    date.textContent = formatDate(e.startTime);
+
+    content.appendChild(title);
+    content.appendChild(date);
+    summary.appendChild(content);
 
     // prefer anchor inside <summary> for better cross-browser behavior
     var btn = document.createElement('a');
     btn.href = '#';
     btn.className = 'favorite-toggle star empty';
     btn.setAttribute('data-id', String(e.id));
-    btn.setAttribute('aria-label','Toggle favorite');
-    btn.setAttribute('aria-pressed','false');
+    btn.setAttribute('aria-label', 'Toggle favorite');
+    btn.setAttribute('aria-pressed', 'false');
     summary.appendChild(btn);
 
     var p = document.createElement('p');
@@ -155,6 +170,7 @@
       data.forEach(function(e){ list.appendChild(createEventElement(e)); });
       updateFavoriteButtons();
       if (aria) aria.textContent = 'Events loaded.';
+      showView(currentView);
     }).catch(function(err){
       if (aria) aria.textContent = 'Could not load events.';
       console.error(err);
