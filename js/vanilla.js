@@ -127,6 +127,23 @@
   }
 
   function loadAndRender(){
+    var aria = document.getElementById('aria-status');
+    // Prefer global EVENTS var (works for file:// openings)
+    if (window.EVENTS && Array.isArray(window.EVENTS)){
+      try{
+        var data = window.EVENTS.slice();
+        data.sort(function(a,b){ return new Date(a.startTime) - new Date(b.startTime); });
+        list.innerHTML = '';
+        data.forEach(function(e){ list.appendChild(createEventElement(e)); });
+        updateFavoriteButtons();
+        if (aria) aria.textContent = 'Events loaded.';
+        return;
+      }catch(e){
+        console.error('Failed to render window.EVENTS', e);
+      }
+    }
+
+    // Fallback: try fetching JSON over XHR/fetch (works when served via HTTP)
     fetch('data/events.json').then(function(res){
       if (!res.ok) throw new Error('Failed to load events');
       return res.json();
@@ -135,24 +152,8 @@
       list.innerHTML = '';
       data.forEach(function(e){ list.appendChild(createEventElement(e)); });
       updateFavoriteButtons();
+      if (aria) aria.textContent = 'Events loaded.';
     }).catch(function(err){
-      var aria = document.getElementById('aria-status');
-      if (aria) aria.textContent = 'Could not load events via fetch; attempting inline fallback.';
-      // Fallback: look for inline JSON in a script tag with id "events-data"
-      try {
-        var inline = document.getElementById('events-data');
-        if (inline) {
-          var dataInline = JSON.parse(inline.textContent);
-          dataInline.sort(function(a,b){ return new Date(a.startTime) - new Date(b.startTime); });
-          list.innerHTML = '';
-          dataInline.forEach(function(e){ list.appendChild(createEventElement(e)); });
-          updateFavoriteButtons();
-          if (aria) aria.textContent = 'Events loaded from embedded data.';
-          return;
-        }
-      } catch (e2) {
-        console.error('Inline parse failed', e2);
-      }
       if (aria) aria.textContent = 'Could not load events.';
       console.error(err);
     });
