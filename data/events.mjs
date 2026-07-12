@@ -1,5 +1,4 @@
-/* Events data as a JS global for local file:// usage */
-window.EVENTS = [
+export const EVENTS = [
   {
     id: 1,
     title: "Christmas Eve 2017",
