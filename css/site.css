@@ -67,12 +67,13 @@ small { font-size: 70%; }
   display: none;
 }
 
-#tools label {
+#tools > label {
   display: inline-flex;
   align-items: center;
   padding: 5px 15px;
   border-bottom: 2px solid transparent;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 #tab-all:checked + label,
@@ -82,6 +83,7 @@ small { font-size: 70%; }
 }
 
 #search-form {
+  order: 2;
   flex: 1 1 100%;
   display: none;
   margin-top: 10px;
