@@ -1,7 +1,6 @@
 (function(){
   var search = document.getElementById('search');
   var list = document.getElementById('events');
-  var items = list.querySelectorAll('li');
   var favoritesKey = 'favorites';
 
   function loadFavorites(){
@@ -29,7 +28,7 @@
   if (search) {
     search.addEventListener('input', function(){
       var q = this.value.trim().toLowerCase();
-      items.forEach(function(li){
+      Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
         var text = li.textContent.toLowerCase();
         li.style.display = (!q || text.indexOf(q) !== -1) ? '' : 'none';
       });
@@ -52,7 +51,7 @@
   // View links: All / Favorites / Up Next
   function showView(view){
     var favs = loadFavorites();
-    items.forEach(function(li){
+    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
       li.style.display = '';
       if (view === 'favorites'){
         var id = li.querySelector('.favorite-toggle').getAttribute('data-id');
@@ -77,15 +76,73 @@
     e.preventDefault();
     var now = new Date();
     var next = null;
-    items.forEach(function(li){
+    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
       var start = new Date(li.getAttribute('data-start'));
       if (start >= now && (next === null || start < new Date(next.getAttribute('data-start')))) next = li;
     });
-    items.forEach(function(li){ li.style.display = (next && li === next) ? '' : 'none'; });
+    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){ li.style.display = (next && li === next) ? '' : 'none'; });
     clearActive();
     this.classList.add('active');
   });
 
-  // initialize
-  updateFavoriteButtons();
+  // Render events by fetching data/events.json, then initialize
+  function createEventElement(e){
+    var li = document.createElement('li');
+    li.id = 'event' + e.id;
+    li.className = 'list-group-item event-list';
+    li.setAttribute('data-start', e.startTime);
+
+    var details = document.createElement('details');
+    var summary = document.createElement('summary');
+
+    var titleHtml = e.title + '<br/><small class="text-muted">' + formatDate(e.startTime) + '</small>';
+    summary.innerHTML = titleHtml;
+
+    var btn = document.createElement('button');
+    btn.className = 'favorite-toggle star empty';
+    btn.setAttribute('data-id', String(e.id));
+    btn.setAttribute('aria-label','Toggle favorite');
+    btn.setAttribute('aria-pressed','false');
+    summary.appendChild(btn);
+
+    var p = document.createElement('p');
+    p.textContent = e.description || '';
+
+    details.appendChild(summary);
+    details.appendChild(p);
+    li.appendChild(details);
+    return li;
+  }
+
+  function formatDate(iso){
+    var d = new Date(iso);
+    var month = String(d.getMonth()+1).padStart(2,'0');
+    var day = String(d.getDate()).padStart(2,'0');
+    var hours = d.getHours();
+    var suffix = 'am';
+    if (hours === 0) hours = 12; else if (hours >= 12){ if (hours > 12) hours -= 12; suffix = 'pm'; }
+    var minutes = String(d.getMinutes()).padStart(2,'0');
+    hours = String(hours).padStart(2,'0');
+    return d.getFullYear() + '/' + month + '/' + day + ' at ' + hours + ':' + minutes + suffix;
+  }
+
+  function loadAndRender(){
+    fetch('data/events.json').then(function(res){
+      if (!res.ok) throw new Error('Failed to load events');
+      return res.json();
+    }).then(function(data){
+      data.sort(function(a,b){ return new Date(a.startTime) - new Date(b.startTime); });
+      list.innerHTML = '';
+      data.forEach(function(e){ list.appendChild(createEventElement(e)); });
+      updateFavoriteButtons();
+    }).catch(function(err){
+      var aria = document.getElementById('aria-status');
+      if (aria) aria.textContent = 'Could not load events.';
+      console.error(err);
+    });
+  }
+
+  // run after DOM ready
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadAndRender); else loadAndRender();
+
 })();
