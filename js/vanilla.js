@@ -51,11 +51,15 @@
   // View links: All / Favorites / Up Next
   function showView(view){
     var favs = loadFavorites();
+    var now = new Date();
     Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
       li.style.display = '';
       if (view === 'favorites'){
         var id = li.querySelector('.favorite-toggle').getAttribute('data-id');
         if (favs.indexOf(id) === -1) li.style.display = 'none';
+      } else if (view === 'up-next') {
+        var start = new Date(li.getAttribute('data-start'));
+        if (start < now) li.style.display = 'none';
       }
     });
   }
@@ -74,13 +78,7 @@
   // compute and show up-next (next future event)
   if (upNextLink) upNextLink.addEventListener('click', function(e){
     e.preventDefault();
-    var now = new Date();
-    var next = null;
-    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
-      var start = new Date(li.getAttribute('data-start'));
-      if (start >= now && (next === null || start < new Date(next.getAttribute('data-start')))) next = li;
-    });
-    Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){ li.style.display = (next && li === next) ? '' : 'none'; });
+    showView('up-next');
     clearActive();
     this.classList.add('active');
   });
