@@ -1,7 +1,9 @@
 (function(){
   var search = document.getElementById('search');
+  var searchForm = document.getElementById('search-form');
   var list = document.getElementById('events');
   var favoritesKey = 'favorites';
+  var currentView = 'all';
 
   function loadFavorites(){
     try{
@@ -27,6 +29,7 @@
   // Search filter (minimal JS)
   if (search) {
     search.addEventListener('input', function(){
+      if (currentView !== 'all') return;
       var q = this.value.trim().toLowerCase();
       Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
         var text = li.textContent.toLowerCase();
@@ -50,6 +53,9 @@
 
   // View links: All / Favorites / Up Next
   function showView(view){
+    currentView = view;
+    if (searchForm) searchForm.style.display = (view === 'all') ? '' : 'none';
+    if (view !== 'all' && search) search.value = '';
     var favs = loadFavorites();
     var now = new Date();
     Array.prototype.forEach.call(list.querySelectorAll('li'), function(li){
