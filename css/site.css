@@ -131,7 +131,7 @@ small { font-size: 70%; }
 
 /* Favorite-button visuals and focus styles */
 .favorite-toggle {
-  background: none;
+  background-color: transparent;
   border: 0;
   padding: 6px;
   cursor: pointer;
