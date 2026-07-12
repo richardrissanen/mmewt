@@ -21,13 +21,15 @@
 
   <main role="main" class="container">
 
-    <div id="tools" class="list-group">
-      <input type="radio" id="tab-all" name="tab" value="all" checked>
-      <label for="tab-all" class="tool-link">All</label>
-      <input type="radio" id="tab-favorites" name="tab" value="favorites">
-      <label for="tab-favorites" class="tool-link">Favorites</label>
-      <input type="radio" id="tab-up-next" name="tab" value="up-next">
-      <label for="tab-up-next" class="tool-link">Up Next</label>
+    <div id="tools">
+      <div id="tool-tabs">
+        <input type="radio" id="tab-all" name="tab" value="all" checked>
+        <label for="tab-all" class="tool-link">All</label>
+        <input type="radio" id="tab-favorites" name="tab" value="favorites">
+        <label for="tab-favorites" class="tool-link">Favorites</label>
+        <input type="radio" id="tab-up-next" name="tab" value="up-next">
+        <label for="tab-up-next" class="tool-link">Up Next</label>
+      </div>
 
       <form id="search-form">
         <input id="search" class="form-control" type="search" placeholder="Search events" aria-label="Search">
