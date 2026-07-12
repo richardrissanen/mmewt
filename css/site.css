@@ -1,6 +1,6 @@
 a:hover { text-decoration: none !important; }
 
-body { padding-top: 9rem; }
+body { padding-top: 55px; }
 
 form {
   margin-top: 20px;
@@ -45,11 +45,8 @@ small { font-size: 70%; }
 }
 
 #tools {
-  position: fixed;
+  position: sticky;
   top: 55px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
   width: 100%;
   max-width: 960px;
   background-color: #e9ecef;
@@ -87,12 +84,10 @@ small { font-size: 70%; }
 }
 
 #search-form {
+  order: 2;
+  flex: 1 1 100%;
   display: none;
   margin: 10px 1rem 0;
-}
-
-#tab-all:checked ~ #search-form {
-  display: block;
 }
 
 #tab-all:checked ~ #search-form {
