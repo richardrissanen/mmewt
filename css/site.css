@@ -45,9 +45,13 @@ small { font-size: 70%; }
 }
 
 #tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
   background-color: #e9ecef;
   border-bottom: 2px solid rgba(0,0,0,0.2);
-  padding: 5px 0;
+  padding: 5px 0 10px;
   position: fixed;
   top: 55px;
   z-index: 100;
@@ -59,7 +63,8 @@ small { font-size: 70%; }
 }
 
 #tools label {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 5px 15px;
   border-bottom: 2px solid transparent;
   cursor: pointer;
@@ -72,6 +77,7 @@ small { font-size: 70%; }
 }
 
 #search-form {
+  flex: 1 1 100%;
   display: none;
   margin-top: 10px;
 }
